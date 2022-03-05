@@ -1,5 +1,5 @@
 # ApexLookUp
-一个mirai-console插件，用于查询apex英雄当前地图轮换和玩家信息
+一个目前很简陋的mirai-console插件，用于查询apex英雄当前地图轮换和玩家信息
 
 ## 指令
 使用前请确认已经安装[chat-command插件](https://github.com/project-mirai/chat-command)  
