@@ -52,10 +52,14 @@ fun playerStat(playerid: String): String{
     player += "----------传奇------------" + "\n"
     player += "当前使用:" + res.legends.selected.LegendName + "\n"
     player += "追踪器:" + "\n"
-
-    var numberOfTracker = res.legends.selected.data.indexOf(res.legends.selected.data.last())
-    for(i in 0..numberOfTracker){
-        player += res.legends.selected.data[i].name + ":" +res.legends.selected.data[i].value + "\n"
+    if (res.legends.selected.data.isEmpty()){
+        player += "无"
+    }
+    else {
+        var numberOfTracker = res.legends.selected.data.indexOf(res.legends.selected.data.last())
+        for (i in 0..numberOfTracker) {
+            player += res.legends.selected.data[i].name + ":" + res.legends.selected.data[i].value + "\n"
+        }
     }
     return player
 }
