@@ -13,17 +13,23 @@ fun playerStat(playerid: String): String{
         RankLookUp.logger.error("查询出错")
         return "查询失败"
     }
+    if (requestStr.contains("Error")){
+        var errorInfo = ""
+        val res = Gson().fromJson(requestStr, ApexResponseError::class.java)
+        errorInfo = "查询出错：" + res.Error
+        return errorInfo
+    }
     val res = Gson().fromJson(requestStr, ApexResponsePlayer::class.java)
     var player = ""
     player += "名称:" + res.global.name + "\n"
     player += "等级:" + res.global.level + "\n"
-    player += "----------排位------------" + "\n"
+    player += "--------排位---------" + "\n"
     player += "段位:" + res.global.rank.rankName + "\n"
     player += "分数:" + res.global.rank.rankScore + "\n"
-    player += "----------竞技场----------" + "\n"
+    player += "--------竞技场--------" + "\n"
     player += "段位:" + res.global.arena.rankName + "\n"
     player += "竞技场分:" + res.global.arena.rankScore + "\n"
-    player += "----------状态------------" + "\n"
+    player += "--------状态----------" + "\n"
     player += if (res.realtime.isOnline == 0){
         "在线状态：离线"  + "\n"
     }else{
@@ -42,8 +48,9 @@ fun playerStat(playerid: String): String{
     player += "----------传奇------------" + "\n"
     player += "当前使用:" + res.legends.selected.LegendName + "\n"
     player += "追踪器:" + "\n"
-    player += res.legends.selected.data[0].name + ":" +res.legends.selected.data[0].value + "\n"
-    player += res.legends.selected.data[1].name + ":" +res.legends.selected.data[1].value + "\n"
-    player += res.legends.selected.data[1].name + ":" +res.legends.selected.data[2].value
+    var numberOfTracker = res.legends.selected.data.indexOf(res.legends.selected.data.last())
+    for(i in 0..numberOfTracker){
+        player += res.legends.selected.data[i].name + ":" +res.legends.selected.data[i].value + "\n"
+    }
     return player
 }
