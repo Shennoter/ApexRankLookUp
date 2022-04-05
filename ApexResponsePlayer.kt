@@ -1,0 +1,481 @@
+data class ApexResponsePlayer(
+    val global: Global,
+    val legends: Legends,
+    val mozambiquehere_internal: MozambiquehereInternal,
+    val realtime: Realtime,
+    val total: Total
+)
+
+data class Global(
+    val arena: Arena,
+    val avatar: String,
+    val badges: List<Badge>,
+    val bans: Bans,
+    val battlepass: Battlepass,
+    val internalUpdateCount: Int,
+    val level: Int,
+    val name: String,
+    val platform: String,
+    val rank: Rank,
+    val toNextLevelPercent: Int,
+    val uid: Long
+)
+
+data class Legends(
+    val all: All,
+    val selected: Selected
+)
+
+data class MozambiquehereInternal(
+    val APIAccessType: String,
+    val ClusterID: String,
+    val claimedBy: String,
+    val clusterSrv: String,
+    val isNewToDB: Boolean,
+    val rate_limit: RateLimit
+)
+
+data class Realtime(
+    val canJoin: Int,
+    val currentState: String,
+    val currentStateAsText: String,
+    val currentStateSecsAgo: Int,
+    val currentStateSinceTimestamp: Int,
+    val isInGame: Int,
+    val isOnline: Int,
+    val lobbyState: String,
+    val partyFull: Int,
+    val selectedLegend: String
+)
+
+data class Total(
+    val damage: Damage,
+    val kd: Kd,
+    val kills: Kills,
+    val kills_season_12: KillsSeason12,
+    val shotgun_kills: ShotgunKills,
+    val smoke_grenade_enemies_hit: SmokeGrenadeEnemiesHit,
+    val specialEvent_damage: SpecialEventDamage,
+    val specialEvent_wins: SpecialEventWins
+)
+
+data class Arena(
+    val ladderPosPlatform: Int,
+    val rankDiv: Int,
+    val rankImg: String,
+    val rankName: String,
+    val rankScore: Int,
+    val rankedSeason: String
+)
+
+data class Badge(
+    val name: String,
+    val value: Int
+)
+
+data class Bans(
+    val isActive: Boolean,
+    val last_banReason: String,
+    val remainingSeconds: Int
+)
+
+data class Battlepass(
+    val history: History,
+    val level: String
+)
+
+data class Rank(
+    val ladderPosPlatform: Int,
+    val rankDiv: Int,
+    val rankImg: String,
+    val rankName: String,
+    val rankScore: Int,
+    val rankedSeason: String
+)
+
+data class History(
+    val season1: Int,
+    val season10: Int,
+    val season11: Int,
+    val season12: Int,
+    val season2: Int,
+    val season3: Int,
+    val season4: Int,
+    val season5: Int,
+    val season6: Int,
+    val season7: Int,
+    val season8: Int,
+    val season9: Int
+)
+
+data class All(
+    val Ash: Ash,
+    val Bangalore: Bangalore,
+    val Bloodhound: Bloodhound,
+    val Caustic: Caustic,
+    val Crypto: Crypto,
+    val Fuse: Fuse,
+    val Gibraltar: Gibraltar,
+    val Global: GlobalX,
+    val Horizon: Horizon,
+    val Lifeline: Lifeline,
+    val Loba: Loba,
+    val MadMaggie: MadMaggie,
+    val Mirage: Mirage,
+    val Octane: Octane,
+    val Pathfinder: Pathfinder,
+    val Rampart: Rampart,
+    val Revenant: Revenant,
+    val Seer: Seer,
+    val Valkyrie: Valkyrie,
+    val Wattson: Wattson,
+    val Wraith: Wraith
+)
+
+data class Selected(
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXXXXXX,
+    val LegendName: String,
+    val `data`: List<DataXXX>,
+    val gameInfo: GameInfoXX
+)
+
+data class Ash(
+    val ImgAssets: ImgAssets
+)
+
+data class Bangalore(
+    val ImgAssets: ImgAssetsX,
+    val `data`: List<Data>,
+    val gameInfo: GameInfo
+)
+
+data class Bloodhound(
+    val ImgAssets: ImgAssetsXX
+)
+
+data class Caustic(
+    val ImgAssets: ImgAssetsXXX
+)
+
+data class Crypto(
+    val ImgAssets: ImgAssetsXXXX,
+    val `data`: List<DataX>,
+    val gameInfo: GameInfoX
+)
+
+data class Fuse(
+    val ImgAssets: ImgAssetsXXXXX
+)
+
+data class Gibraltar(
+    val ImgAssets: ImgAssetsXXXXXX
+)
+
+data class GlobalX(
+    val ImgAssets: ImgAssetsXXXXXXX
+)
+
+data class Horizon(
+    val ImgAssets: ImgAssetsXXXXXXXX
+)
+
+data class Lifeline(
+    val ImgAssets: ImgAssetsXXXXXXXXX
+)
+
+data class Loba(
+    val ImgAssets: ImgAssetsXXXXXXXXXX
+)
+
+data class MadMaggie(
+    val ImgAssets: ImgAssetsXXXXXXXXXXX
+)
+
+data class Mirage(
+    val ImgAssets: ImgAssetsXXXXXXXXXXXX
+)
+
+data class Octane(
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXX
+)
+
+data class Pathfinder(
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXXX
+)
+
+data class Rampart(
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXX
+)
+
+data class Revenant(
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXX
+)
+
+data class Seer(
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXX
+)
+
+data class Valkyrie(
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXXX,
+    val `data`: List<DataXX>
+)
+
+data class Wattson(
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXXXX
+)
+
+data class Wraith(
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXXXXX
+)
+
+data class ImgAssets(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsX(
+    val banner: String,
+    val icon: String
+)
+
+data class Data(
+    val key: String,
+    val name: String,
+    val rank: RankX,
+    val rankPlatformSpecific: RankPlatformSpecific,
+    val value: Int
+)
+
+data class GameInfo(
+    val badges: List<BadgeX>
+)
+
+data class RankX(
+    val rankPos: Any,
+    val topPercent: Any
+)
+
+data class RankPlatformSpecific(
+    val rankPos: Any,
+    val topPercent: Any
+)
+
+data class BadgeX(
+    val name: String,
+    val value: Int
+)
+
+data class ImgAssetsXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class DataX(
+    val key: String,
+    val name: String,
+    val rank: RankXX,
+    val rankPlatformSpecific: RankPlatformSpecificX,
+    val value: Int
+)
+
+data class GameInfoX(
+    val badges: List<BadgeXX>
+)
+
+data class RankXX(
+    val rankPos: String,
+    val topPercent: String
+)
+
+data class RankPlatformSpecificX(
+    val rankPos: String,
+    val topPercent: String
+)
+
+data class BadgeXX(
+    val name: String,
+    val value: Int
+)
+
+data class ImgAssetsXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXXXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXXXXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXXXXXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXXXXXXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXXXXXXXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class DataXX(
+    val key: String,
+    val name: String,
+    val rank: RankXXX,
+    val rankPlatformSpecific: RankPlatformSpecificXX,
+    val value: Int
+)
+
+data class RankXXX(
+    val rankPos: Int,
+    val topPercent: Double
+)
+
+data class RankPlatformSpecificXX(
+    val rankPos: Int,
+    val topPercent: Double
+)
+
+data class ImgAssetsXXXXXXXXXXXXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXXXXXXXXXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class ImgAssetsXXXXXXXXXXXXXXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class DataXXX(
+    val global: Boolean,
+    val key: String,
+    val name: String,
+    val value: Int
+)
+
+data class GameInfoXX(
+    val badges: List<BadgeXXX>,
+    val frame: String,
+    val frameRarity: String,
+    val intro: String,
+    val introRarity: String,
+    val pose: String,
+    val poseRarity: String,
+    val skin: String,
+    val skinRarity: String
+)
+
+data class BadgeXXX(
+    val category: String,
+    val name: String,
+    val value: Int
+)
+
+data class RateLimit(
+    val current_req: String,
+    val max_per_second: Int
+)
+
+data class Damage(
+    val name: String,
+    val value: Int
+)
+
+data class Kd(
+    val name: String,
+    val value: String
+)
+
+data class Kills(
+    val name: String,
+    val value: Int
+)
+
+data class KillsSeason12(
+    val name: String,
+    val value: Int
+)
+
+data class ShotgunKills(
+    val name: String,
+    val value: Int
+)
+
+data class SmokeGrenadeEnemiesHit(
+    val name: String,
+    val value: Int
+)
+
+data class SpecialEventDamage(
+    val name: String,
+    val value: Int
+)
+
+data class SpecialEventWins(
+    val name: String,
+    val value: Int
+)
