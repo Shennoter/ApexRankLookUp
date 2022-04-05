@@ -1,5 +1,3 @@
-package pers.shennoter
-
 data class ApexResponsePlayer(
     val global: Global,
     val legends: Legends,
@@ -41,6 +39,7 @@ data class Realtime(
     val canJoin: Int,
     val currentState: String,
     val currentStateAsText: String,
+    val currentStateSecsAgo: Int,
     val currentStateSinceTimestamp: Int,
     val isInGame: Int,
     val isOnline: Int,
@@ -53,6 +52,7 @@ data class Total(
     val damage: Damage,
     val kd: Kd,
     val kills: Kills,
+    val kills_season_12: KillsSeason12,
     val shotgun_kills: ShotgunKills,
     val smoke_grenade_enemies_hit: SmokeGrenadeEnemiesHit,
     val specialEvent_damage: SpecialEventDamage,
@@ -116,6 +116,7 @@ data class All(
     val Crypto: Crypto,
     val Fuse: Fuse,
     val Gibraltar: Gibraltar,
+    val Global: GlobalX,
     val Horizon: Horizon,
     val Lifeline: Lifeline,
     val Loba: Loba,
@@ -132,10 +133,10 @@ data class All(
 )
 
 data class Selected(
-    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXXXXX,
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXXXXXX,
     val LegendName: String,
-    val `data`: List<DataXX>,
-    val gameInfo: GameInfoX
+    val `data`: List<DataXXX>,
+    val gameInfo: GameInfoXX
 )
 
 data class Ash(
@@ -157,7 +158,9 @@ data class Caustic(
 )
 
 data class Crypto(
-    val ImgAssets: ImgAssetsXXXX
+    val ImgAssets: ImgAssetsXXXX,
+    val `data`: List<DataX>,
+    val gameInfo: GameInfoX
 )
 
 data class Fuse(
@@ -168,57 +171,61 @@ data class Gibraltar(
     val ImgAssets: ImgAssetsXXXXXX
 )
 
-data class Horizon(
+data class GlobalX(
     val ImgAssets: ImgAssetsXXXXXXX
 )
 
-data class Lifeline(
+data class Horizon(
     val ImgAssets: ImgAssetsXXXXXXXX
 )
 
-data class Loba(
+data class Lifeline(
     val ImgAssets: ImgAssetsXXXXXXXXX
 )
 
-data class MadMaggie(
+data class Loba(
     val ImgAssets: ImgAssetsXXXXXXXXXX
 )
 
-data class Mirage(
+data class MadMaggie(
     val ImgAssets: ImgAssetsXXXXXXXXXXX
 )
 
-data class Octane(
+data class Mirage(
     val ImgAssets: ImgAssetsXXXXXXXXXXXX
 )
 
-data class Pathfinder(
+data class Octane(
     val ImgAssets: ImgAssetsXXXXXXXXXXXXX
 )
 
-data class Rampart(
+data class Pathfinder(
     val ImgAssets: ImgAssetsXXXXXXXXXXXXXX
 )
 
-data class Revenant(
+data class Rampart(
     val ImgAssets: ImgAssetsXXXXXXXXXXXXXXX
 )
 
-data class Seer(
+data class Revenant(
     val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXX
 )
 
+data class Seer(
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXX
+)
+
 data class Valkyrie(
-    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXX,
-    val `data`: List<DataX>
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXXX,
+    val `data`: List<DataXX>
 )
 
 data class Wattson(
-    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXXX
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXXXX
 )
 
 data class Wraith(
-    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXXXX
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXXXXX
 )
 
 data class ImgAssets(
@@ -244,13 +251,13 @@ data class GameInfo(
 )
 
 data class RankX(
-    val rankPos: Int,
-    val topPercent: Double
+    val rankPos: Any,
+    val topPercent: Any
 )
 
 data class RankPlatformSpecific(
-    val rankPos: Int,
-    val topPercent: Double
+    val rankPos: Any,
+    val topPercent: Any
 )
 
 data class BadgeX(
@@ -271,6 +278,33 @@ data class ImgAssetsXXX(
 data class ImgAssetsXXXX(
     val banner: String,
     val icon: String
+)
+
+data class DataX(
+    val key: String,
+    val name: String,
+    val rank: RankXX,
+    val rankPlatformSpecific: RankPlatformSpecificX,
+    val value: Int
+)
+
+data class GameInfoX(
+    val badges: List<BadgeXX>
+)
+
+data class RankXX(
+    val rankPos: String,
+    val topPercent: String
+)
+
+data class RankPlatformSpecificX(
+    val rankPos: String,
+    val topPercent: String
+)
+
+data class BadgeXX(
+    val name: String,
+    val value: Int
 )
 
 data class ImgAssetsXXXXX(
@@ -338,27 +372,27 @@ data class ImgAssetsXXXXXXXXXXXXXXXXX(
     val icon: String
 )
 
-data class DataX(
-    val key: String,
-    val name: String,
-    val rank: RankXX,
-    val rankPlatformSpecific: RankPlatformSpecificX,
-    val value: Int
-)
-
-data class RankXX(
-    val rankPos: Int,
-    val topPercent: Double
-)
-
-data class RankPlatformSpecificX(
-    val rankPos: Int,
-    val topPercent: Double
-)
-
 data class ImgAssetsXXXXXXXXXXXXXXXXXX(
     val banner: String,
     val icon: String
+)
+
+data class DataXX(
+    val key: String,
+    val name: String,
+    val rank: RankXXX,
+    val rankPlatformSpecific: RankPlatformSpecificXX,
+    val value: Int
+)
+
+data class RankXXX(
+    val rankPos: Int,
+    val topPercent: Double
+)
+
+data class RankPlatformSpecificXX(
+    val rankPos: Int,
+    val topPercent: Double
 )
 
 data class ImgAssetsXXXXXXXXXXXXXXXXXXX(
@@ -371,14 +405,20 @@ data class ImgAssetsXXXXXXXXXXXXXXXXXXXX(
     val icon: String
 )
 
-data class DataXX(
+data class ImgAssetsXXXXXXXXXXXXXXXXXXXXX(
+    val banner: String,
+    val icon: String
+)
+
+data class DataXXX(
+    val global: Boolean,
     val key: String,
     val name: String,
     val value: Int
 )
 
-data class GameInfoX(
-    val badges: List<BadgeXX>,
+data class GameInfoXX(
+    val badges: List<BadgeXXX>,
     val frame: String,
     val frameRarity: String,
     val intro: String,
@@ -389,7 +429,7 @@ data class GameInfoX(
     val skinRarity: String
 )
 
-data class BadgeXX(
+data class BadgeXXX(
     val category: String,
     val name: String,
     val value: Int
@@ -411,6 +451,11 @@ data class Kd(
 )
 
 data class Kills(
+    val name: String,
+    val value: Int
+)
+
+data class KillsSeason12(
     val name: String,
     val value: Int
 )
