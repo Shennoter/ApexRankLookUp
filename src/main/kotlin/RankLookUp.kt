@@ -1,23 +1,44 @@
 package pers.shennoter
 
+import craftStat
 import net.mamoe.mirai.console.command.*
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
 
 import net.mamoe.mirai.contact.Contact.Companion.sendImage
+import playerStat
 import java.io.File
-import java.net.URL
 
 
 object RankLookUp : KotlinPlugin(
     JvmPluginDescription(
         id = "pers.shennoter.RankLookUp",
         name = "RankLookUp",
-        version = "0.2.0",
+        version = "1.0.0",
     )
 ){
     override fun onEnable() {
         logger.info("apex查询插件已载入")
+        val folder1 = File("./data/pers.shennoter.ranklookup/")
+        if(!folder1.exists()) {
+            folder1.mkdirs()
+        }
+        var folder2 = File("./config/pers.shennoter.ranklookup/")
+        if(!folder2.exists()) {
+            folder2.mkdirs()
+        }
+
+        var keyFile = File("./config/pers.shennoter.ranklookup/apikey.yml")
+        if (!keyFile.exists()) {
+            try {
+                keyFile.createNewFile();
+            } catch (e: Exception) {
+                e.printStackTrace();
+            }
+        }
+        if (keyFile.length().toInt() == 0){
+            logger.error("未找到ApiKey，请到 https://apexlegendsapi.com/ 获取ApiKey填入 ./config/pers.shennoter.ranklookup/apikey.yml 中并重启mirai-console")
+        }
         CommandManager.registerCommand(Player)
         CommandManager.registerCommand(Map)
         CommandManager.registerCommand(Craft)
@@ -30,8 +51,18 @@ object Player : SimpleCommand(
 ) {
     @Handler
     suspend fun CommandSender.apexPlayerInfo(id: String) {
-        val info = playerStat(id)
-        subject?.sendMessage(info)
+        val code = playerStat(id)
+        if (code == "错误，短时间内请求过多,请稍后再试") {
+            subject?.sendMessage(code)
+        }
+        else{
+            try {
+                subject?.sendImage(File("./data/pers.shennoter.ranklookup/player.png"))
+            } catch (e: Exception) {
+                RankLookUp.logger.error("图片读取出错")
+            }
+            subject?.sendMessage(code)
+        }
 
     }
 }
@@ -42,8 +73,18 @@ object Map : SimpleCommand(
 ){
     @Handler
     suspend fun CommandSender.apexMapInfo() {
-        val info = mapStat()
-        subject?.sendMessage(info)
+        val code = mapStat()
+        if (code == "错误，短时间内请求过多,请稍后再试") {
+            subject?.sendMessage(code)
+        }
+        else {
+            try {
+                subject?.sendImage(File("./data/pers.shennoter.ranklookup/map.png"))
+            } catch (e: Exception) {
+                RankLookUp.logger.error("图片读取出错")
+            }
+            subject?.sendMessage(code)
+        }
     }
 }
 
@@ -53,11 +94,17 @@ object Craft : SimpleCommand(
 ){
     @Handler
     suspend fun CommandSender.apexCraftInfo() {
-        val info = craftStat()
-        try {
-            subject?.sendImage(File("./data/pers.shennoter.ranklookup/craft.png"))
-        }catch (e:Exception){
-            RankLookUp.logger.error("图片出错")
+        val code = craftStat()
+        if (code == "错误，短时间内请求过多,请稍后再试") {
+            subject?.sendMessage(code)
+        }
+        else {
+            try {
+                subject?.sendImage(File("./data/pers.shennoter.ranklookup/craft.png"))
+            } catch (e: Exception) {
+                RankLookUp.logger.error("图片读取出错")
+            }
+            subject?.sendMessage(code)
         }
     }
 }

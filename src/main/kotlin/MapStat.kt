@@ -1,37 +1,49 @@
 package pers.shennoter
 
 import com.google.gson.Gson
+import drawTextToImage
+import mergeImage
+import java.awt.Color
+import java.awt.image.BufferedImage
+import java.io.File
 import java.net.URL
+import javax.imageio.ImageIO
 
 
 fun mapStat():String{
+    val apiKey = File("./config/pers.shennoter.ranklookup/apikey.yml").readLines()[0]
     var requestStr = ""
+    var code = "查询成功"
     try {
-        val url = "https://api.mozambiquehe.re/maprotation?version=2&auth=FsKmkWPMRJlOEmW8H3ZN"
+        val url = "https://api.mozambiquehe.re/maprotation?version=2&auth=$apiKey"
         requestStr = URL(url).readText()
     }catch (e:Exception){
-        RankLookUp.logger.error("查询出错")
-        return "查询失败"
+        val excp = e.toString()
+        if (":" in excp){
+            code = "错误，短时间内请求过多,请稍后再试"
+        }
+        RankLookUp.logger.error(code)
+        return code
     }
     val res = Gson().fromJson(requestStr, ApexResponseMap::class.java)
-    var map = ""
-    map += "----------匹配------------" + "\n"
-    map += "当前地图:" + res.battle_royale.current.map + "\n"
-    map += "剩余时间:" + res.battle_royale.current.remainingTimer + "\n"
-    map += "下一轮换:" + res.battle_royale.next.map + "\n"
-    //map += res.battle_royale.current.asset
-    map += "---------竞技场-----------" + "\n"
-    map += "当前地图:" + res.arenas.current.map + "\n"
-    map += "剩余时间:" + res.arenas.current.remainingTimer + "\n"
-    map += "下一轮换:" + res.arenas.next.map + "\n"
-    //map += res.arenas.current.asset
-    map += "----------排位------------" + "\n"
-    map += "当前地图:" + res.ranked.current.map + "\n"
-    map += "下一轮换:" + res.ranked.next.map + "\n"
-    //map += res.ranked.current.asset
-    map += "--------排位竞技场--------" + "\n"
-    map += "当前地图:" + res.arenasRanked.current.map + "\n"
-    map += "剩余时间:" + res.arenasRanked.current.remainingTimer + "\n"
-    map += "下一轮换:" + res.arenasRanked.next.map
-    return map
+
+    val battleRoyale: BufferedImage = ImageIO.read(URL(res.battle_royale.current.asset))
+    val ranked:BufferedImage = ImageIO.read(URL(res.ranked.current.asset))
+    //val control:BufferedImage = ImageIO.read(URL(res.control.current.asset))
+    //val arenas: BufferedImage = ImageIO.read(URL(res.arenas.current.asset))
+    //val arenasRanked: BufferedImage = ImageIO.read(URL(res.arenasRanked.current.asset))
+    val background = mergeImage(false,battleRoyale,ranked)
+
+    var img = drawTextToImage(background,"${res.battle_royale.current.map}",197,650,300, Color.white)
+    img = drawTextToImage(img,"匹配",197,350,300, Color.white)
+    img = drawTextToImage(img,"结束时间："+"${res.battle_royale.current.readableDate_end}",197,900,70, Color.white)
+    img = drawTextToImage(img,"下一轮换："+"${res.battle_royale.next.map}",197,1000,70, Color.white)
+
+    img = drawTextToImage(img,"排位",197,1550,300, Color.white)
+    img = drawTextToImage(img,"${res.ranked.current.map}",197,1900,300, Color.white)
+    img = drawTextToImage(img,"下一轮换："+"${res.ranked.next.map}",197,2100,70, Color.white)
+
+    ImageIO.write(img,"png", File("./data/pers.shennoter.ranklookup/map.png"))
+
+    return code
 }

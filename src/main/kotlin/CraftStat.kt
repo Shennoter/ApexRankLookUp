@@ -1,6 +1,5 @@
-package pers.shennoter
-
 import com.google.gson.Gson
+import pers.shennoter.RankLookUp
 import java.awt.image.BufferedImage
 import java.io.File
 import java.net.URL
@@ -8,15 +7,20 @@ import javax.imageio.ImageIO
 
 
 fun craftStat():String{
+    val apiKey = File("./config/pers.shennoter.ranklookup/apikey.yml").readLines()[0]
     var requestStr = ""
+    var code = "查询成功"
     try {
-        val url = "https://api.mozambiquehe.re/crafting?&auth=FsKmkWPMRJlOEmW8H3ZN"
+        val url = "https://api.mozambiquehe.re/crafting?&auth=$apiKey"
         requestStr = URL(url).readText()
     }catch (e:Exception){
-        RankLookUp.logger.error("URL访问失败")
-        return "查询失败"
+        val excp = e.toString()
+        if (":" in excp){
+            code = "错误，短时间内请求过多,请稍后再试"
+        }
+        RankLookUp.logger.error(code)
+        return code
     }
-
 
     val res = Gson().fromJson(requestStr, ApexResponseCraft::class.java)
     val daily1: BufferedImage = ImageIO.read(URL(res[0].bundleContent[0].itemType.asset))
@@ -26,12 +30,8 @@ fun craftStat():String{
     val img1: BufferedImage = mergeImage(true, daily1, daily2)
     val img2: BufferedImage = mergeImage(true, weekly1, weekly2)
     val img = mergeImage(false, img1, img2)
-    val folder = File("./data/pers.shennoter.ranklookup")
-    if(!folder.exists()) {
-        folder.mkdirs()
-    }
     ImageIO.write(img,"png", File("./data/pers.shennoter.ranklookup/craft.png"))
-    return "查询完毕"
+    return code
 }
 
 fun mergeImage(isHorizontal: Boolean, vararg imgs: BufferedImage): BufferedImage {
