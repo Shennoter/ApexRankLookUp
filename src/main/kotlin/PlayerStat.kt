@@ -21,7 +21,6 @@ fun playerStat(playerid: String): String{
     try {
         val url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=$apiKey"
         requestStr = URL(url).readText()
-
     }catch(e: FileNotFoundException){
         code = "查询出错：Player exists but has never played Apex Legends"
         RankLookUp.logger.error(code)
