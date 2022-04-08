@@ -4,6 +4,7 @@ import pers.shennoter.RankLookUp
 import java.awt.*
 import java.awt.image.BufferedImage
 import java.io.File
+import java.io.FileNotFoundException
 import java.net.URL
 import javax.imageio.ImageIO
 
@@ -16,17 +17,21 @@ fun playerStat(playerid: String): String{
         id = playerid.replace("@@", "%20")
     }
     var code = "查询成功"
+
     try {
         val url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=$apiKey"
         requestStr = URL(url).readText()
+
+    }catch(e: FileNotFoundException){
+        code = "查询出错：Player exists but has never played Apex Legends"
+        RankLookUp.logger.error(code)
+        return code
     }catch (e:Exception){
-        val excp = e.toString()
-        if (":" in excp){
-            code = "错误，短时间内请求过多,请稍后再试"
-        }
+        code = "错误，短时间内请求过多,请稍后再试"
         RankLookUp.logger.error(code)
         return code
     }
+
     if (requestStr.contains("Error")){
         var errorInfo = ""
         val res = Gson().fromJson(requestStr, ApexResponseError::class.java)

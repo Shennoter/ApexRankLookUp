@@ -14,10 +14,7 @@ fun craftStat():String{
         val url = "https://api.mozambiquehe.re/crafting?&auth=$apiKey"
         requestStr = URL(url).readText()
     }catch (e:Exception){
-        val excp = e.toString()
-        if (":" in excp){
-            code = "错误，短时间内请求过多,请稍后再试"
-        }
+        code = "错误，短时间内请求过多,请稍后再试"
         RankLookUp.logger.error(code)
         return code
     }

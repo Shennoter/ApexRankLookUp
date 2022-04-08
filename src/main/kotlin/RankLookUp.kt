@@ -14,7 +14,7 @@ object RankLookUp : KotlinPlugin(
     JvmPluginDescription(
         id = "pers.shennoter.RankLookUp",
         name = "RankLookUp",
-        version = "1.0.0",
+        version = "1.0.1",
     )
 ){
     override fun onEnable() {
@@ -52,15 +52,15 @@ object Player : SimpleCommand(
     @Handler
     suspend fun CommandSender.apexPlayerInfo(id: String) {
         val code = playerStat(id)
-        if (code == "错误，短时间内请求过多,请稍后再试") {
-            subject?.sendMessage(code)
-        }
-        else{
+        if (code == "查询成功") {
             try {
                 subject?.sendImage(File("./data/pers.shennoter.ranklookup/player.png"))
             } catch (e: Exception) {
                 RankLookUp.logger.error("图片读取出错")
             }
+            subject?.sendMessage(code)
+        }
+        else{
             subject?.sendMessage(code)
         }
 
@@ -74,15 +74,16 @@ object Map : SimpleCommand(
     @Handler
     suspend fun CommandSender.apexMapInfo() {
         val code = mapStat()
-        if (code == "错误，短时间内请求过多,请稍后再试") {
-            subject?.sendMessage(code)
-        }
-        else {
+        if (code == "查询成功") {
             try {
                 subject?.sendImage(File("./data/pers.shennoter.ranklookup/map.png"))
             } catch (e: Exception) {
                 RankLookUp.logger.error("图片读取出错")
             }
+            subject?.sendMessage(code)
+
+        }
+        else {
             subject?.sendMessage(code)
         }
     }
@@ -95,15 +96,15 @@ object Craft : SimpleCommand(
     @Handler
     suspend fun CommandSender.apexCraftInfo() {
         val code = craftStat()
-        if (code == "错误，短时间内请求过多,请稍后再试") {
-            subject?.sendMessage(code)
-        }
-        else {
+        if (code == "查询成功") {
             try {
                 subject?.sendImage(File("./data/pers.shennoter.ranklookup/craft.png"))
             } catch (e: Exception) {
                 RankLookUp.logger.error("图片读取出错")
             }
+            subject?.sendMessage(code)
+        }
+        else {
             subject?.sendMessage(code)
         }
     }

@@ -18,10 +18,7 @@ fun mapStat():String{
         val url = "https://api.mozambiquehe.re/maprotation?version=2&auth=$apiKey"
         requestStr = URL(url).readText()
     }catch (e:Exception){
-        val excp = e.toString()
-        if (":" in excp){
-            code = "错误，短时间内请求过多,请稍后再试"
-        }
+        code = "错误，短时间内请求过多,请稍后再试"
         RankLookUp.logger.error(code)
         return code
     }
@@ -36,7 +33,7 @@ fun mapStat():String{
 
     var img = drawTextToImage(background,"${res.battle_royale.current.map}",197,650,300, Color.white)
     img = drawTextToImage(img,"匹配",197,350,300, Color.white)
-    img = drawTextToImage(img,"结束时间："+"${res.battle_royale.current.readableDate_end}",197,900,70, Color.white)
+    img = drawTextToImage(img,"剩余时间："+"${res.battle_royale.current.remainingTimer}",197,900,70, Color.white)
     img = drawTextToImage(img,"下一轮换："+"${res.battle_royale.next.map}",197,1000,70, Color.white)
 
     img = drawTextToImage(img,"排位",197,1550,300, Color.white)
