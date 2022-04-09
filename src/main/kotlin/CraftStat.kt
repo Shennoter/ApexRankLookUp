@@ -1,4 +1,5 @@
 import com.google.gson.Gson
+import pers.shennoter.Config
 import pers.shennoter.RankLookUp
 import java.awt.image.BufferedImage
 import java.io.File
@@ -7,11 +8,14 @@ import javax.imageio.ImageIO
 
 
 fun craftStat():String{
-    val apiKey = File("./config/pers.shennoter.ranklookup/apikey.yml").readLines()[0]
+    if(Config.ApiKey == "") {
+        return "未填写ApiKey"
+    }
     var requestStr = ""
     var code = "查询成功"
+
     try {
-        val url = "https://api.mozambiquehe.re/crafting?&auth=$apiKey"
+        val url = "https://api.mozambiquehe.re/crafting?&auth=${Config.ApiKey}"
         requestStr = URL(url).readText()
     }catch (e:Exception){
         code = "错误，短时间内请求过多,请稍后再试"

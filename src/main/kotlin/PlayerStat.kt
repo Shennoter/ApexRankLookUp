@@ -1,5 +1,6 @@
 import com.google.gson.Gson
 import pers.shennoter.ApexResponseError
+import pers.shennoter.Config
 import pers.shennoter.RankLookUp
 import java.awt.*
 import java.awt.image.BufferedImage
@@ -10,7 +11,9 @@ import javax.imageio.ImageIO
 
 
 fun playerStat(playerid: String): String{
-    val apiKey = File("./config/pers.shennoter.ranklookup/apikey.yml").readLines()[0]
+    if(Config.ApiKey == "") {
+        return "未填写ApiKey"
+    }
     var requestStr = ""
     var id = playerid
     if("@@" in playerid){
@@ -19,8 +22,9 @@ fun playerStat(playerid: String): String{
     var code = "查询成功"
 
     try {
-        val url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=$apiKey"
+        val url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=${Config.ApiKey}"
         requestStr = URL(url).readText()
+
     }catch(e: FileNotFoundException){
         code = "查询出错：Player exists but has never played Apex Legends"
         RankLookUp.logger.error(code)
@@ -37,9 +41,54 @@ fun playerStat(playerid: String): String{
         errorInfo = "查询出错：" + res.Error
         return errorInfo
     }
-    //获取json
-    val res = Gson().fromJson(requestStr, ApexResponsePlayer::class.java)
 
+    var textinfo = ""
+    val res = Gson().fromJson(requestStr, ApexResponsePlayer::class.java)
+    if (Config.mode == "pic"){
+        playerPicturMode(res)
+    }
+    else{
+        textinfo = playerTextMode(res)
+        code = "$code\n===================\n$textinfo"
+    }
+
+    return code
+}
+
+fun drawTextToImage(image: BufferedImage,
+                    text: String,
+                    x: Int,
+                    y: Int,
+                    size:Int,
+                    color:Color): BufferedImage {
+    // 拿到 Graphics2D 画图对象
+    val imageGraphics: Graphics2D = image.createGraphics()
+    // 设置高清字体
+    imageGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+    imageGraphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT)
+    imageGraphics.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY)
+    // 设置文字 color
+    imageGraphics.color = color
+    // 设置文体 style
+    imageGraphics.font = Font("微软雅黑", Font.BOLD, size)
+    // 文字上图
+    imageGraphics.drawString(text, x, y )
+    return image
+}
+
+fun drawImageToImage(img1: BufferedImage,
+                     img2: BufferedImage,
+                     width: Int,
+                     height:Int,
+                     x: Int,
+                     y: Int): BufferedImage {
+    val imageGraphics: Graphics2D = img1.createGraphics()
+    imageGraphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR)
+    imageGraphics.drawImage(img2.getScaledInstance(width,height,Image.SCALE_SMOOTH),x,y,null)
+    return img1
+}
+
+fun playerPicturMode(res:ApexResponsePlayer){
     val file = File("./data/pers.shennoter.ranklookup/apex.png")
     if(!file.exists()){
         val background: BufferedImage = ImageIO.read(URL("https://shennoter.top/wp-content/uploads/mirai/apex.png"))
@@ -80,7 +129,7 @@ fun playerStat(playerid: String): String{
     var damage = 1
     var flag1 = false
     var flag2 = false
-        if (res.legends.selected.data.isEmpty()){
+    if (res.legends.selected.data.isEmpty()){
         img = drawTextToImage(img,"无", 69,1700,50,Color.white)
     }
     else {
@@ -123,39 +172,45 @@ fun playerStat(playerid: String): String{
 
     //创建图片
     ImageIO.write(img,"png", File("./data/pers.shennoter.ranklookup/player.png"))
-
-    return code
 }
 
-fun drawTextToImage(image: BufferedImage,
-                    text: String,
-                    x: Int,
-                    y: Int,
-                    size:Int,
-                    color:Color): BufferedImage {
-    // 拿到 Graphics2D 画图对象
-    val imageGraphics: Graphics2D = image.createGraphics()
-    // 设置高清字体
-    imageGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
-    imageGraphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT)
-    imageGraphics.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY)
-    // 设置文字 color
-    imageGraphics.color = color
-    // 设置文体 style
-    imageGraphics.font = Font("微软雅黑", Font.BOLD, size)
-    // 文字上图
-    imageGraphics.drawString(text, x, y )
-    return image
-}
-
-fun drawImageToImage(img1: BufferedImage,
-                     img2: BufferedImage,
-                     width: Int,
-                     height:Int,
-                     x: Int,
-                     y: Int): BufferedImage {
-    val imageGraphics: Graphics2D = img1.createGraphics()
-    imageGraphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR)
-    imageGraphics.drawImage(img2.getScaledInstance(width,height,Image.SCALE_SMOOTH),x,y,null)
-    return img1
+fun playerTextMode(res:ApexResponsePlayer):String{
+    var player = ""
+    player += "名称:" + res.global.name + "\n"
+    player += "等级:" + res.global.level + "\n"
+    player += "--------排位---------" + "\n"
+    player += "段位:" + res.global.rank.rankName + "\n"
+    player += "分数:" + res.global.rank.rankScore + "\n"
+    player += "--------竞技场--------" + "\n"
+    player += "段位:" + res.global.arena.rankName + "\n"
+    player += "竞技场分:" + res.global.arena.rankScore + "\n"
+    player += "--------状态----------" + "\n"
+    player += if (res.realtime.isOnline == 0){
+        "在线状态：离线"  + "\n"
+    }else{
+        "在线状态：在线" + "\n"
+    }
+    player += if (res.realtime.isInGame == 0){
+        "游戏状态：未在游戏" + "\n"
+    }else{
+        "游戏状态：游戏中" + "\n"
+    }
+    player += if (res.realtime.partyFull == 0){
+        "队伍状态：空闲" + "\n"
+    }else{
+        "队伍状态：已满" + "\n"
+    }
+    player += "----------传奇------------" + "\n"
+    player += "当前使用:" + res.legends.selected.LegendName + "\n"
+    player += "追踪器:" + "\n"
+    if (res.legends.selected.data.isEmpty()){
+        player += "无"
+    }
+    else {
+        var numberOfTracker = res.legends.selected.data.indexOf(res.legends.selected.data.last())
+        for (i in 0..numberOfTracker) {
+            player += res.legends.selected.data[i].name + ":" + res.legends.selected.data[i].value + "\n"
+        }
+    }
+    return player
 }
