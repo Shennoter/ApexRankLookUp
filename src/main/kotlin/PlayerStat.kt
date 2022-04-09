@@ -45,10 +45,10 @@ fun playerStat(playerid: String): String{
     var textinfo = ""
     val res = Gson().fromJson(requestStr, ApexResponsePlayer::class.java)
     if (Config.mode == "pic"){
-        playerPicturMode(res)
+        playerPicturMode(res,playerid)
     }
     else{
-        textinfo = playerTextMode(res)
+        textinfo = playerTextMode(res,playerid)
         code = "$code\n===================\n$textinfo"
     }
 
@@ -88,7 +88,7 @@ fun drawImageToImage(img1: BufferedImage,
     return img1
 }
 
-fun playerPicturMode(res:ApexResponsePlayer){
+fun playerPicturMode(res:ApexResponsePlayer,playerid : String){
     val file = File("./data/pers.shennoter.ranklookup/apex.png")
     if(!file.exists()){
         val background: BufferedImage = ImageIO.read(URL("https://shennoter.top/wp-content/uploads/mirai/apex.png"))
@@ -98,6 +98,10 @@ fun playerPicturMode(res:ApexResponsePlayer){
     val rank: BufferedImage = ImageIO.read(URL(res.global.rank.rankImg))
     val arena: BufferedImage = ImageIO.read(URL(res.global.arena.rankImg))
     val legend: BufferedImage = ImageIO.read(URL(res.legends.selected.ImgAssets.banner))
+    var name = res.global.name
+    if (name == ""){
+        name = playerid
+    }
 
     var img = drawTextToImage(background,"${res.global.rank.rankScore}",541,800,70,Color.white)
     //图片渲染
@@ -106,7 +110,7 @@ fun playerPicturMode(res:ApexResponsePlayer){
     img = drawImageToImage(img,legend,1980,567,0,1050)
     //文字渲染
     img = drawTextToImage(img, "${res.global.arena.rankScore}",1445,795,70,Color.white)
-    img = drawTextToImage(img,res.global.name, 455,200,100,Color.white)
+    img = drawTextToImage(img,name, 455,200,100,Color.white)
     img = drawTextToImage(img,"${res.global.level}", 181,336,35,Color.black)
     if (res.global.rank.ladderPosPlatform == -1){
         img = drawTextToImage(img, "无", 668, 905, 70, Color.white)
@@ -174,9 +178,14 @@ fun playerPicturMode(res:ApexResponsePlayer){
     ImageIO.write(img,"png", File("./data/pers.shennoter.ranklookup/player.png"))
 }
 
-fun playerTextMode(res:ApexResponsePlayer):String{
+fun playerTextMode(res:ApexResponsePlayer,playerid : String):String{
+    var name = res.global.name
+    if (name == ""){
+        name = playerid
+    }
+
     var player = ""
-    player += "名称:" + res.global.name + "\n"
+    player += "名称:$name\n"
     player += "等级:" + res.global.level + "\n"
     player += "--------排位---------" + "\n"
     player += "段位:" + res.global.rank.rankName + "\n"
