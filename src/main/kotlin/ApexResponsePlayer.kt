@@ -258,8 +258,8 @@ data class GameInfo(
 )
 
 data class RankX(
-    val rankPos: Int,
-    val topPercent: Double
+    val rankPos: String,
+    val topPercent: String
 )
 
 data class RankPlatformSpecific(
@@ -300,13 +300,13 @@ data class GameInfoX(
 )
 
 data class RankXX(
-    val rankPos: Int,
-    val topPercent: Double
+    val rankPos: String,
+    val topPercent: String
 )
 
 data class RankPlatformSpecificX(
-    val rankPos: Int,
-    val topPercent: Double
+    val rankPos: String,
+    val topPercent: String
 )
 
 data class BadgeXX(
@@ -373,13 +373,13 @@ data class DataXX(
 )
 
 data class RankXXX(
-    val rankPos: Int,
-    val topPercent: Double
+    val rankPos: String,
+    val topPercent: String
 )
 
 data class RankPlatformSpecificXX(
-    val rankPos: Int,
-    val topPercent: Double
+    val rankPos: String,
+    val topPercent: String
 )
 
 data class ImgAssetsXXXXXXXXXXXXXXX(
@@ -411,8 +411,8 @@ data class DataXXX(
 )
 
 data class RankXXXX(
-    val rankPos: Int,
-    val topPercent: Double
+    val rankPos: String,
+    val topPercent: String
 )
 
 data class RankPlatformSpecificXXX(
