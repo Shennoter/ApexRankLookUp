@@ -1,9 +1,14 @@
 data class ApexResponsePlayer(
+    val ALS: ALS,
     val global: Global,
     val legends: Legends,
     val mozambiquehere_internal: MozambiquehereInternal,
     val realtime: Realtime,
     val total: Total
+)
+
+data class ALS(
+    val isALSDataEnabled: Boolean
 )
 
 data class Global(
@@ -39,7 +44,6 @@ data class Realtime(
     val canJoin: Int,
     val currentState: String,
     val currentStateAsText: String,
-    val currentStateSecsAgo: Int,
     val currentStateSinceTimestamp: Int,
     val isInGame: Int,
     val isOnline: Int,
@@ -52,11 +56,13 @@ data class Total(
     val damage: Damage,
     val kd: Kd,
     val kills: Kills,
+    val kills_season_11: KillsSeason11,
     val kills_season_12: KillsSeason12,
     val shotgun_kills: ShotgunKills,
     val smoke_grenade_enemies_hit: SmokeGrenadeEnemiesHit,
     val specialEvent_damage: SpecialEventDamage,
-    val specialEvent_wins: SpecialEventWins
+    val specialEvent_wins: SpecialEventWins,
+    val wins_season_11: WinsSeason11
 )
 
 data class Arena(
@@ -135,7 +141,7 @@ data class All(
 data class Selected(
     val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXXXXXX,
     val LegendName: String,
-    val `data`: List<DataXXX>,
+    val `data`: List<DataXXXX>,
     val gameInfo: GameInfoXX
 )
 
@@ -200,7 +206,8 @@ data class Octane(
 )
 
 data class Pathfinder(
-    val ImgAssets: ImgAssetsXXXXXXXXXXXXXX
+    val ImgAssets: ImgAssetsXXXXXXXXXXXXXX,
+    val `data`: List<DataXX>
 )
 
 data class Rampart(
@@ -217,7 +224,7 @@ data class Seer(
 
 data class Valkyrie(
     val ImgAssets: ImgAssetsXXXXXXXXXXXXXXXXXX,
-    val `data`: List<DataXX>
+    val `data`: List<DataXXX>
 )
 
 data class Wattson(
@@ -251,13 +258,13 @@ data class GameInfo(
 )
 
 data class RankX(
-    val rankPos: Any,
-    val topPercent: Any
+    val rankPos: Int,
+    val topPercent: Double
 )
 
 data class RankPlatformSpecific(
-    val rankPos: Any,
-    val topPercent: Any
+    val rankPos: String,
+    val topPercent: String
 )
 
 data class BadgeX(
@@ -293,13 +300,13 @@ data class GameInfoX(
 )
 
 data class RankXX(
-    val rankPos: String,
-    val topPercent: String
+    val rankPos: Int,
+    val topPercent: Double
 )
 
 data class RankPlatformSpecificX(
-    val rankPos: String,
-    val topPercent: String
+    val rankPos: Int,
+    val topPercent: Double
 )
 
 data class BadgeXX(
@@ -357,6 +364,24 @@ data class ImgAssetsXXXXXXXXXXXXXX(
     val icon: String
 )
 
+data class DataXX(
+    val key: String,
+    val name: String,
+    val rank: RankXXX,
+    val rankPlatformSpecific: RankPlatformSpecificXX,
+    val value: Int
+)
+
+data class RankXXX(
+    val rankPos: Int,
+    val topPercent: Double
+)
+
+data class RankPlatformSpecificXX(
+    val rankPos: Int,
+    val topPercent: Double
+)
+
 data class ImgAssetsXXXXXXXXXXXXXXX(
     val banner: String,
     val icon: String
@@ -377,22 +402,22 @@ data class ImgAssetsXXXXXXXXXXXXXXXXXX(
     val icon: String
 )
 
-data class DataXX(
+data class DataXXX(
     val key: String,
     val name: String,
-    val rank: RankXXX,
-    val rankPlatformSpecific: RankPlatformSpecificXX,
+    val rank: RankXXXX,
+    val rankPlatformSpecific: RankPlatformSpecificXXX,
     val value: Int
 )
 
-data class RankXXX(
+data class RankXXXX(
     val rankPos: Int,
     val topPercent: Double
 )
 
-data class RankPlatformSpecificXX(
-    val rankPos: Int,
-    val topPercent: Double
+data class RankPlatformSpecificXXX(
+    val rankPos: String,
+    val topPercent: String
 )
 
 data class ImgAssetsXXXXXXXXXXXXXXXXXXX(
@@ -410,7 +435,7 @@ data class ImgAssetsXXXXXXXXXXXXXXXXXXXXX(
     val icon: String
 )
 
-data class DataXXX(
+data class DataXXXX(
     val global: Boolean,
     val key: String,
     val name: String,
@@ -455,6 +480,11 @@ data class Kills(
     val value: Int
 )
 
+data class KillsSeason11(
+    val name: String,
+    val value: Int
+)
+
 data class KillsSeason12(
     val name: String,
     val value: Int
@@ -476,6 +506,11 @@ data class SpecialEventDamage(
 )
 
 data class SpecialEventWins(
+    val name: String,
+    val value: Int
+)
+
+data class WinsSeason11(
     val name: String,
     val value: Int
 )
