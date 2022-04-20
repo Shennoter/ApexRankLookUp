@@ -32,7 +32,7 @@ object RankLookUp : KotlinPlugin(
             folder1.mkdirs()
         }
         if (Config.ApiKey == ""){
-            logger.error("未找到ApiKey，请到 https://apexlegendsapi.com/ 获取ApiKey填入 ./config/pers.shennoter.ranklookup/apikey.yml 中并重启mirai-console")
+            logger.error("未找到ApiKey，请到 https://apexlegendsapi.com/ 获取ApiKey填入 ./config/pers.shennoter.ranklookup/config.yml 中并重启mirai-console")
         }
     }
 }
@@ -52,7 +52,7 @@ object Player : SimpleCommand(
                     } catch (e: Exception) {
                         RankLookUp.logger.error("图片读取出错")
                     }
-                    subject?.sendMessage(code)
+                    RankLookUp.logger.info(code)
                 } else {
                     RankLookUp.logger.error(code)
                     subject?.sendMessage(code)
@@ -82,7 +82,6 @@ object Map : SimpleCommand(
                         RankLookUp.logger.error("图片读取出错")
                     }
                     RankLookUp.logger.info(code)
-                    subject?.sendMessage(code)
                 } else {
                     RankLookUp.logger.error(code)
                     subject?.sendMessage(code)
@@ -110,7 +109,6 @@ object Craft : SimpleCommand(
                 RankLookUp.logger.error("图片读取出错")
             }
             RankLookUp.logger.info(code)
-            subject?.sendMessage(code)
         }
         else {
             RankLookUp.logger.error(code)
