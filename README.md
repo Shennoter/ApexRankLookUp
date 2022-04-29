@@ -1,8 +1,8 @@
 # ApexLookUp
-![satrs](https://img.shields.io/github/stars/Shennoter/ApexRankLookUp.svg?style=for-the-badge&logo=github&color=yellow)
-![downloads](https://shields.io/github/downloads/Shennoter/ApexRankLookUp/total.svg?style=for-the-badge&logo=github)
-![license](https://shields.io/github/license/Shennoter/ApexRankLookUp.svg?style=for-the-badge&logo=github)
-![version](https://shields.io/github/v/release/Shennoter/ApexRankLookUp?display_name=tag&style=for-the-badge&logo=github&color=ff69b4)
+![satrs](https://img.shields.io/github/stars/Shennoter/ApexRankLookUp.svg?style=for-the-badge&color=yellow)
+![downloads](https://shields.io/github/downloads/Shennoter/ApexRankLookUp/total.svg?style=for-the-badge)
+![license](https://shields.io/github/license/Shennoter/ApexRankLookUp.svg?style=for-the-badge)
+![version](https://shields.io/github/v/release/Shennoter/ApexRankLookUp?display_name=tag&style=for-the-badge&color=ff69b4)
 - 一个基于[mirai-console](https://github.com/mamoe/mirai)QQ机器人的插件，用于查询apex英雄当前地图轮换、玩家信息和复制器轮换
 - 使用前请到[https://apexlegendsapi.com/](https://apexlegendsapi.com/)获取ApiKey填入config/pers.shennoter.ranklookup/config.yml
 - 由于api限制，短时间内请求次数过多可能查询失败，请稍等后重试
