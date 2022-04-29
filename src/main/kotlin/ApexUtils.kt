@@ -11,7 +11,7 @@ class ApexImage {
     var isEmpty = true
     private val image = ByteArrayOutputStream()
     fun save(buffImage: BufferedImage) {
-        ImageIO.write(buffImage, "png", image)
+        ImageIO.write(buffImage, Config.picType, image)
         isEmpty = false
     }
 
