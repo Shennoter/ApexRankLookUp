@@ -7,26 +7,11 @@ import net.mamoe.mirai.console.command.BuiltInCommands.AutoLoginCommand.clear
 import net.mamoe.mirai.console.command.BuiltInCommands.AutoLoginCommand.setConfig
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
+
 import net.mamoe.mirai.contact.Contact.Companion.sendImage
+import pers.shennoter.RankLookUp.reload
 import playerStat
-import java.awt.image.BufferedImage
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 import java.io.File
-import javax.imageio.ImageIO
-
-class ApexImage {
-    var isEmpty = true
-    private val image = ByteArrayOutputStream()
-    fun save(buffImage: BufferedImage) {
-        ImageIO.write(buffImage, "png", image)
-        isEmpty = false
-    }
-
-    fun get(): ByteArrayInputStream {
-        return (ByteArrayInputStream(image.toByteArray()))
-    }
-}
 
 object RankLookUp : KotlinPlugin(
     JvmPluginDescription(

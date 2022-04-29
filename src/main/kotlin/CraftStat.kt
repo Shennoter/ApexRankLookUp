@@ -1,8 +1,5 @@
 import com.google.gson.Gson
-import pers.shennoter.ApexImage
-import pers.shennoter.ApexResponseCraft
-import pers.shennoter.Config
-import pers.shennoter.RankLookUp
+import pers.shennoter.*
 import java.awt.image.BufferedImage
 import java.net.URL
 import javax.imageio.ImageIO
@@ -25,10 +22,10 @@ fun craftStat(image: ApexImage):String{
     }
 
     val res = Gson().fromJson(requestStr, ApexResponseCraft::class.java)
-    val daily1: BufferedImage = ImageIO.read(URL(res[0].bundleContent[0].itemType.asset))
-    val daily2: BufferedImage = ImageIO.read(URL(res[0].bundleContent[1].itemType.asset))
-    val weekly1: BufferedImage = ImageIO.read(URL(res[1].bundleContent[0].itemType.asset))
-    val weekly2: BufferedImage = ImageIO.read(URL(res[1].bundleContent[1].itemType.asset))
+    val daily1: BufferedImage = ImageCache("craft_"+res[0].bundleContent[0].itemType.name,res[0].bundleContent[0].itemType.asset)
+    val daily2: BufferedImage = ImageCache("craft_"+res[0].bundleContent[1].itemType.name,res[0].bundleContent[1].itemType.asset)
+    val weekly1: BufferedImage = ImageCache("craft_"+res[1].bundleContent[0].itemType.name,res[1].bundleContent[0].itemType.asset)
+    val weekly2: BufferedImage = ImageCache("craft_"+res[1].bundleContent[1].itemType.name,res[1].bundleContent[1].itemType.asset)
     val img1: BufferedImage = mergeImage(true, daily1, daily2)
     val img2: BufferedImage = mergeImage(true, weekly1, weekly2)
     val img = mergeImage(false, img1, img2)

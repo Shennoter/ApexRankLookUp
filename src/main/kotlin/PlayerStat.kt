@@ -1,8 +1,5 @@
 import com.google.gson.Gson
-import pers.shennoter.ApexImage
-import pers.shennoter.ApexResponseError
-import pers.shennoter.Config
-import pers.shennoter.RankLookUp
+import pers.shennoter.*
 import java.awt.*
 import java.awt.image.BufferedImage
 import java.io.File
@@ -90,15 +87,10 @@ fun drawImageToImage(img1: BufferedImage,
 }
 
 fun playerPicturMode(res:ApexResponsePlayer,playerid : String,image : ApexImage){
-    val file = File("./data/pers.shennoter.ranklookup/apex.png")
-    if(!file.exists()){
-        val background: BufferedImage = ImageIO.read(URL("https://shennoter.top/wp-content/uploads/mirai/apex.png"))
-        ImageIO.write(background,"png", File("./data/pers.shennoter.ranklookup/apex.png"))
-    }
-    val background: BufferedImage = ImageIO.read(File("./data/pers.shennoter.ranklookup/apex.png"))
-    val rank: BufferedImage = ImageIO.read(URL(res.global.rank.rankImg))
-    val arena: BufferedImage = ImageIO.read(URL(res.global.arena.rankImg))
-    val legend: BufferedImage = ImageIO.read(URL(res.legends.selected.ImgAssets.banner))
+    val background: BufferedImage = ImageCache("apex","https://shennoter.top/wp-content/uploads/mirai/apex.png")
+    val rank: BufferedImage = ImageCache("rank_"+res.global.rank.rankName,res.global.rank.rankImg)
+    val arena: BufferedImage = ImageCache("arena_"+res.global.arena.rankName,res.global.arena.rankImg)
+    val legend: BufferedImage = ImageCache("legend_"+res.legends.selected.LegendName,res.legends.selected.ImgAssets.banner)
     var name = res.global.name
     if (name == ""){
         name = playerid
