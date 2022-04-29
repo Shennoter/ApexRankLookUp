@@ -7,11 +7,26 @@ import net.mamoe.mirai.console.command.BuiltInCommands.AutoLoginCommand.clear
 import net.mamoe.mirai.console.command.BuiltInCommands.AutoLoginCommand.setConfig
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
-
 import net.mamoe.mirai.contact.Contact.Companion.sendImage
-import pers.shennoter.RankLookUp.reload
 import playerStat
+import java.awt.image.BufferedImage
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.File
+import javax.imageio.ImageIO
+
+class ApexImage {
+    var isEmpty = true
+    private val image = ByteArrayOutputStream()
+    fun save(buffImage: BufferedImage) {
+        ImageIO.write(buffImage, "png", image)
+        isEmpty = false
+    }
+
+    fun get(): ByteArrayInputStream {
+        return (ByteArrayInputStream(image.toByteArray()))
+    }
+}
 
 object RankLookUp : KotlinPlugin(
     JvmPluginDescription(
@@ -43,12 +58,13 @@ object Player : SimpleCommand(
 ) {
     @Handler
     suspend fun CommandSender.apexPlayerInfo(id: String) {
-        val code = playerStat(id)
+        val image = ApexImage()
+        val code = playerStat(id,image)
         when(Config.mode){
             "pic"-> {
                 if (code == "查询成功") {
                     try {
-                        subject?.sendImage(File("./data/pers.shennoter.ranklookup/player.png"))
+                        subject?.sendImage(image.get())
                     } catch (e: Exception) {
                         RankLookUp.logger.error("图片读取出错")
                     }
@@ -72,12 +88,13 @@ object Map : SimpleCommand(
 ){
     @Handler
     suspend fun CommandSender.apexMapInfo() {
-        val code = mapStat()
+        val image = ApexImage()
+        val code = mapStat(image)
         when(Config.mode){
             "pic"-> {
                 if (code == "查询成功") {
                     try {
-                        subject?.sendImage(File("./data/pers.shennoter.ranklookup/map.png"))
+                        subject?.sendImage(image.get())
                     } catch (e: Exception) {
                         RankLookUp.logger.error("图片读取出错")
                     }
@@ -101,10 +118,11 @@ object Craft : SimpleCommand(
 ){
     @Handler
     suspend fun CommandSender.apexCraftInfo() {
-        val code = craftStat()
+        val image = ApexImage()
+        val code = craftStat(image)
         if (code == "查询成功") {
             try {
-                subject?.sendImage(File("./data/pers.shennoter.ranklookup/craft.png"))
+                subject?.sendImage(image.get())
             } catch (e: Exception) {
                 RankLookUp.logger.error("图片读取出错")
             }

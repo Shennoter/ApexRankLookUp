@@ -1,4 +1,5 @@
 import com.google.gson.Gson
+import pers.shennoter.ApexImage
 import pers.shennoter.ApexResponseError
 import pers.shennoter.Config
 import pers.shennoter.RankLookUp
@@ -10,7 +11,7 @@ import java.net.URL
 import javax.imageio.ImageIO
 
 
-fun playerStat(playerid: String): String{
+fun playerStat(playerid: String,image: ApexImage): String{
     if(Config.ApiKey == "") {
         return "未填写ApiKey"
     }
@@ -45,7 +46,7 @@ fun playerStat(playerid: String): String{
     var textinfo = ""
     val res = Gson().fromJson(requestStr, ApexResponsePlayer::class.java)
     if (Config.mode == "pic"){
-        playerPicturMode(res,playerid)
+        playerPicturMode(res,playerid,image)
     }
     else{
         textinfo = playerTextMode(res,playerid)
@@ -88,7 +89,7 @@ fun drawImageToImage(img1: BufferedImage,
     return img1
 }
 
-fun playerPicturMode(res:ApexResponsePlayer,playerid : String){
+fun playerPicturMode(res:ApexResponsePlayer,playerid : String,image : ApexImage){
     val file = File("./data/pers.shennoter.ranklookup/apex.png")
     if(!file.exists()){
         val background: BufferedImage = ImageIO.read(URL("https://shennoter.top/wp-content/uploads/mirai/apex.png"))
@@ -175,7 +176,7 @@ fun playerPicturMode(res:ApexResponsePlayer,playerid : String){
     img = drawTextToImage(img,status, 1720,1860,50,Color.white)
 
     //创建图片
-    ImageIO.write(img,"png", File("./data/pers.shennoter.ranklookup/player.png"))
+    image.save(img)
 }
 
 fun playerTextMode(res:ApexResponsePlayer,playerid : String):String{

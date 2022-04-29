@@ -1,13 +1,14 @@
 import com.google.gson.Gson
+import pers.shennoter.ApexImage
+import pers.shennoter.ApexResponseCraft
 import pers.shennoter.Config
 import pers.shennoter.RankLookUp
 import java.awt.image.BufferedImage
-import java.io.File
 import java.net.URL
 import javax.imageio.ImageIO
 
 
-fun craftStat():String{
+fun craftStat(image: ApexImage):String{
     if(Config.ApiKey == "") {
         return "未填写ApiKey"
     }
@@ -31,7 +32,7 @@ fun craftStat():String{
     val img1: BufferedImage = mergeImage(true, daily1, daily2)
     val img2: BufferedImage = mergeImage(true, weekly1, weekly2)
     val img = mergeImage(false, img1, img2)
-    ImageIO.write(img,"png", File("./data/pers.shennoter.ranklookup/craft.png"))
+    image.save(img)
     return code
 }
 
