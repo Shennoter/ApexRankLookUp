@@ -9,11 +9,20 @@
 ## 指令
 使用前请确认已经安装[chat-command插件](https://github.com/project-mirai/chat-command)  
 本插件权限ID为 `pers.shennoter.ranklookup:*`     
+详见用户手册[PermissionCommand](https://github.com/mamoe/mirai/blob/dev/mirai-console/docs/BuiltInCommands.md#permissioncommand)  
+如果输了命令没反应请在控制台输入`/permission add <想要给予权限的对象> pers.shennoter.ranklookup:<想要开启的指令>`  
+如给予所有对象关于此插件的所有权限，请输入`/permission add * pers.shennoter.ranklookup:*`
 |指令 |功能|
 |:---|:---|
 |`/<apexmap 地图查询>`|查询当前地图轮换情况|
 |`/<apexid 玩家查询> [Origin ID]`|查询某玩家（使用Origin ID）（空格需用@@填充）|  
 |`/<apexcraft 复制器查询>` | 查询当前复制器轮换情况|
+## 配置文件
+|配置名称 |功能|
+|:---|:---|
+|`ApiKey`|ApiKey：如果没有请到 https://apexlegendsapi.com/ 获取|
+|`mode`|机器人回复方式： `pic`为图片，`text`为文字(只适用于玩家信息和地图轮换)|  
+|`picType` | 图片质量：`PNG`原图，更清晰；`JPG`更小，发送更快|
 ## 示例  
 - 查询玩家  
   ![player](https://github.com/Shennoter/ApexRankLookUp/blob/main/player.png)
