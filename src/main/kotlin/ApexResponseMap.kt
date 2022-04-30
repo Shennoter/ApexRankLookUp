@@ -138,6 +138,7 @@ data class NextXXX(
 )
 
 data class CurrentXXXX(
+    val code: String,
     val asset: String,
     val map: String
 )

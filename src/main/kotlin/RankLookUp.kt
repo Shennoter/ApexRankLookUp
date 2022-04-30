@@ -43,12 +43,13 @@ object Player : SimpleCommand(
 ) {
     @Handler
     suspend fun CommandSender.apexPlayerInfo(id: String) {
-        val code = playerStat(id)
+        val image = ApexImage()
+        val code = playerStat(id,image)
         when(Config.mode){
             "pic"-> {
                 if (code == "查询成功") {
                     try {
-                        subject?.sendImage(File("./data/pers.shennoter.ranklookup/player.png"))
+                        subject?.sendImage(image.get())
                     } catch (e: Exception) {
                         RankLookUp.logger.error("图片读取出错")
                     }
@@ -72,12 +73,13 @@ object Map : SimpleCommand(
 ){
     @Handler
     suspend fun CommandSender.apexMapInfo() {
-        val code = mapStat()
+        val image = ApexImage()
+        val code = mapStat(image)
         when(Config.mode){
             "pic"-> {
                 if (code == "查询成功") {
                     try {
-                        subject?.sendImage(File("./data/pers.shennoter.ranklookup/map.png"))
+                        subject?.sendImage(image.get())
                     } catch (e: Exception) {
                         RankLookUp.logger.error("图片读取出错")
                     }
@@ -101,10 +103,11 @@ object Craft : SimpleCommand(
 ){
     @Handler
     suspend fun CommandSender.apexCraftInfo() {
-        val code = craftStat()
+        val image = ApexImage()
+        val code = craftStat(image)
         if (code == "查询成功") {
             try {
-                subject?.sendImage(File("./data/pers.shennoter.ranklookup/craft.png"))
+                subject?.sendImage(image.get())
             } catch (e: Exception) {
                 RankLookUp.logger.error("图片读取出错")
             }

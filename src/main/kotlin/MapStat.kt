@@ -11,7 +11,7 @@ import java.net.URL
 import javax.imageio.ImageIO
 
 
-fun mapStat():String{
+fun mapStat(image: ApexImage):String{
     if(Config.ApiKey == "") {
         return "未填写ApiKey"
     }
@@ -31,7 +31,7 @@ fun mapStat():String{
 
 
     if (Config.mode == "pic"){
-        mapPictureMode(res)
+        mapPictureMode(res, image)
     }
     else{
         textinfo = mapTextMode(res)
@@ -41,12 +41,12 @@ fun mapStat():String{
     return code
 }
 
-fun mapPictureMode(res: ApexResponseMap){
-    val buffer:BufferedImage = ImageIO.read(URL("https://apexlegendsstatus.com/assets/maps/Arena_Encore.png"))
-    val battleRoyale: BufferedImage = ImageIO.read(URL(res.battle_royale.current.asset))
-    val ranked:BufferedImage = ImageIO.read(URL(res.ranked.current.asset))
-    val arenas: BufferedImage = ImageIO.read(URL(res.arenas.current.asset))
-    val arenasRanked: BufferedImage = ImageIO.read(URL(res.arenasRanked.current.asset))
+fun mapPictureMode(res: ApexResponseMap, image: ApexImage){
+    val buffer:BufferedImage = ImageCache("buffer","https://apexlegendsstatus.com/assets/maps/Arena_Encore.png")
+    val battleRoyale: BufferedImage = ImageCache("mapbr_"+res.battle_royale.current.code,res.battle_royale.current.asset)
+    val ranked:BufferedImage = ImageCache("mapbr_"+res.ranked.current.code,res.ranked.current.asset)
+    val arenas: BufferedImage = ImageCache("mapar_"+res.arenas.current.code,res.arenas.current.asset)
+    val arenasRanked: BufferedImage = ImageCache("mapar_"+res.arenasRanked.current.code,res.arenasRanked.current.asset)
     //val control:BufferedImage = ImageIO.read(URL(res.control.current.asset))
 
     //渲染背景
@@ -76,7 +76,7 @@ fun mapPictureMode(res: ApexResponseMap){
     img = drawTextToImage(img,"剩余时间："+"${res.arenasRanked.current.remainingTimer}",90,2250,35, Color.white)
     img = drawTextToImage(img,"下一轮换："+"${res.arenasRanked.next.map}",90,2300,35, Color.white)
 
-    ImageIO.write(img,"png", File("./data/pers.shennoter.ranklookup/map.png"))
+    image.save(img)
 }
 
 fun mapTextMode(res:ApexResponseMap):String{

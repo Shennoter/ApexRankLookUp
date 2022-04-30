@@ -9,4 +9,6 @@ object Config : AutoSavePluginConfig("config") {
     val ApiKey: String by value("")
     @ValueDescription("回复模式: pic为图片，text为文字(只适用于玩家信息和地图轮换)")
     var mode: String by value("pic")
+    @ValueDescription("图片质量: PNG原图，JPG更小")
+    var picType: String by value("PNG")
 }
