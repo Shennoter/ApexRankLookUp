@@ -17,12 +17,17 @@
 |`/<apexmap 地图查询>`|查询当前地图轮换情况|
 |`/<apexid 玩家查询> [Origin ID]`|查询某玩家（使用Origin ID）（空格需用@@填充）|  
 |`/<apexcraft 复制器查询>` | 查询当前复制器轮换情况|
+|`/<apexpred 猎杀查询>` | 查询当前猎杀门槛|
+|`/<apexnews 新闻查询>` | 查询官方活动新闻（游戏大厅显示的那些）|
+|`/<apexcache 清除缓存>` | 清除产生的缓存文件，解决可能出现的缓存问题|
 ## 配置文件
 |配置名称 |功能|
 |:---|:---|
 |`ApiKey`|ApiKey：如果没有请到 https://apexlegendsapi.com/ 获取|
 |`mode`|机器人回复方式： `pic`为图片，`text`为文字(只适用于玩家信息和地图轮换)|  
 |`picType` | 图片质量：`PNG`原图，更清晰；`JPG`更小，发送更快|
+|`cacheExpireTime` | 缓存图片过期时间，默认为`30`（单位：天）|
+|`cacheAutoDel` | 是否自动清除过期缓存，`true`为是，`false`为否|
 ## 示例  
 - 查询玩家  
   ![player](https://github.com/Shennoter/ApexRankLookUp/blob/main/player.png)
@@ -30,3 +35,7 @@
   ![map](https://github.com/Shennoter/ApexRankLookUp/blob/main/map.png)
 - 查询复制器轮换  
   ![craft](https://github.com/Shennoter/ApexRankLookUp/blob/main/craft.png)
+- 查询猎杀门槛  
+  ![predator](https://github.com/Shennoter/ApexRankLookUp/blob/main/predatoreg.png)
+- 查询官方活动新闻  
+  ![news](https://github.com/Shennoter/ApexRankLookUp/blob/main/news.png)
