@@ -2,7 +2,7 @@ data class ApexResponsePlayer(
     val ALS: ALS,
     val global: Global,
     val legends: Legends,
-    val mozambiquehere_internal: MozambiquehereInternal,
+    val mozambiquehere_Stringernal: MozambiquehereStringernal,
     val realtime: Realtime,
     val total: Total
 )
@@ -17,12 +17,12 @@ data class Global(
     val badges: List<Badge>,
     val bans: Bans,
     val battlepass: Battlepass,
-    val internalUpdateCount: Int,
-    val level: Int,
+    val StringernalUpdateCount: String,
+    val level: String,
     val name: String,
     val platform: String,
     val rank: Rank,
-    val toNextLevelPercent: Int,
+    val toNextLevelPercent: String,
     val uid: Long
 )
 
@@ -31,7 +31,7 @@ data class Legends(
     val selected: Selected
 )
 
-data class MozambiquehereInternal(
+data class MozambiquehereStringernal(
     val APIAccessType: String,
     val ClusterID: String,
     val claimedBy: String,
@@ -67,22 +67,22 @@ data class Total(
 
 data class Arena(
     val ladderPosPlatform: Int,
-    val rankDiv: Int,
+    val rankDiv: String,
     val rankImg: String,
     val rankName: String,
-    val rankScore: Int,
+    val rankScore: String,
     val rankedSeason: String
 )
 
 data class Badge(
     val name: String,
-    val value: Int
+    val value: String
 )
 
 data class Bans(
     val isActive: Boolean,
     val last_banReason: String,
-    val remainingSeconds: Int
+    val remainingSeconds: String
 )
 
 data class Battlepass(
@@ -92,26 +92,26 @@ data class Battlepass(
 
 data class Rank(
     val ladderPosPlatform: Int,
-    val rankDiv: Int,
+    val rankDiv: String,
     val rankImg: String,
     val rankName: String,
-    val rankScore: Int,
+    val rankScore: String,
     val rankedSeason: String
 )
 
 data class History(
-    val season1: Int,
-    val season10: Int,
-    val season11: Int,
-    val season12: Int,
-    val season2: Int,
-    val season3: Int,
-    val season4: Int,
-    val season5: Int,
-    val season6: Int,
-    val season7: Int,
-    val season8: Int,
-    val season9: Int
+    val season1: String,
+    val season10: String,
+    val season11: String,
+    val season12: String,
+    val season2: String,
+    val season3: String,
+    val season4: String,
+    val season5: String,
+    val season6: String,
+    val season7: String,
+    val season8: String,
+    val season9: String
 )
 
 data class All(
@@ -250,7 +250,7 @@ data class Data(
     val name: String,
     val rank: RankX,
     val rankPlatformSpecific: RankPlatformSpecific,
-    val value: Int
+    val value: String
 )
 
 data class GameInfo(
@@ -269,7 +269,7 @@ data class RankPlatformSpecific(
 
 data class BadgeX(
     val name: String,
-    val value: Int
+    val value: String
 )
 
 data class ImgAssetsXX(
@@ -292,7 +292,7 @@ data class DataX(
     val name: String,
     val rank: RankXX,
     val rankPlatformSpecific: RankPlatformSpecificX,
-    val value: Int
+    val value: String
 )
 
 data class GameInfoX(
@@ -311,7 +311,7 @@ data class RankPlatformSpecificX(
 
 data class BadgeXX(
     val name: String,
-    val value: Int
+    val value: String
 )
 
 data class ImgAssetsXXXXX(
@@ -369,7 +369,7 @@ data class DataXX(
     val name: String,
     val rank: RankXXX,
     val rankPlatformSpecific: RankPlatformSpecificXX,
-    val value: Int
+    val value: String
 )
 
 data class RankXXX(
@@ -407,7 +407,7 @@ data class DataXXX(
     val name: String,
     val rank: RankXXXX,
     val rankPlatformSpecific: RankPlatformSpecificXXX,
-    val value: Int
+    val value: String
 )
 
 data class RankXXXX(
@@ -439,15 +439,15 @@ data class DataXXXX(
     val global: Boolean,
     val key: String,
     val name: String,
-    val value: Int
+    val value: String
 )
 
 data class GameInfoXX(
     val badges: List<BadgeXXX>,
     val frame: String,
     val frameRarity: String,
-    val intro: String,
-    val introRarity: String,
+    val Stringro: String,
+    val StringroRarity: String,
     val pose: String,
     val poseRarity: String,
     val skin: String,
@@ -457,17 +457,17 @@ data class GameInfoXX(
 data class BadgeXXX(
     val category: String,
     val name: String,
-    val value: Int
+    val value: String
 )
 
 data class RateLimit(
     val current_req: String,
-    val max_per_second: Int
+    val max_per_second: String
 )
 
 data class Damage(
     val name: String,
-    val value: Int
+    val value: String
 )
 
 data class Kd(
@@ -477,40 +477,40 @@ data class Kd(
 
 data class Kills(
     val name: String,
-    val value: Int
+    val value: String
 )
 
 data class KillsSeason11(
     val name: String,
-    val value: Int
+    val value: String
 )
 
 data class KillsSeason12(
     val name: String,
-    val value: Int
+    val value: String
 )
 
 data class ShotgunKills(
     val name: String,
-    val value: Int
+    val value: String
 )
 
 data class SmokeGrenadeEnemiesHit(
     val name: String,
-    val value: Int
+    val value: String
 )
 
 data class SpecialEventDamage(
     val name: String,
-    val value: Int
+    val value: String
 )
 
 data class SpecialEventWins(
     val name: String,
-    val value: Int
+    val value: String
 )
 
 data class WinsSeason11(
     val name: String,
-    val value: Int
+    val value: String
 )

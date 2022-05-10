@@ -1,14 +1,9 @@
 package pers.shennoter
 
 import com.google.gson.Gson
-import drawImageToImage
-import drawTextToImage
-import mergeImage
 import java.awt.Color
 import java.awt.image.BufferedImage
-import java.io.File
 import java.net.URL
-import javax.imageio.ImageIO
 
 
 fun mapStat(image: ApexImage):String{
@@ -17,7 +12,6 @@ fun mapStat(image: ApexImage):String{
     }
     var requestStr = ""
     var code = "查询成功"
-
     try {
         val url = "https://api.mozambiquehe.re/maprotation?version=2&auth=${Config.ApiKey}"
         requestStr = URL(url).readText()
@@ -26,18 +20,13 @@ fun mapStat(image: ApexImage):String{
         RankLookUp.logger.error(code)
         return code
     }
-    var textinfo = ""
     val res = Gson().fromJson(requestStr, ApexResponseMap::class.java)
-
-
     if (Config.mode == "pic"){
         mapPictureMode(res, image)
     }
     else{
-        textinfo = mapTextMode(res)
-        code = "$code\n===================\n$textinfo"
+        code = mapTextMode(res)
     }
-
     return code
 }
 

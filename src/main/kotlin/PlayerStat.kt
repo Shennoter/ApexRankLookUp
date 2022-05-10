@@ -2,10 +2,8 @@ import com.google.gson.Gson
 import pers.shennoter.*
 import java.awt.*
 import java.awt.image.BufferedImage
-import java.io.File
 import java.io.FileNotFoundException
 import java.net.URL
-import javax.imageio.ImageIO
 
 
 fun playerStat(playerid: String,image: ApexImage): String{
@@ -18,7 +16,6 @@ fun playerStat(playerid: String,image: ApexImage): String{
         id = playerid.replace("@@", "%20")
     }
     var code = "查询成功"
-
     try {
         val url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=${Config.ApiKey}"
         requestStr = URL(url).readText()
@@ -32,64 +29,26 @@ fun playerStat(playerid: String,image: ApexImage): String{
         RankLookUp.logger.error(code)
         return code
     }
-
     if (requestStr.contains("Error")){
         var errorInfo = ""
         val res = Gson().fromJson(requestStr, ApexResponseError::class.java)
         errorInfo = "查询出错：" + res.Error
         return errorInfo
     }
-
-    var textinfo = ""
     val res = Gson().fromJson(requestStr, ApexResponsePlayer::class.java)
     if (Config.mode == "pic"){
         playerPicturMode(res,playerid,image)
     }
     else{
-        textinfo = playerTextMode(res,playerid)
-        code = "$code\n===================\n$textinfo"
+        code = playerTextMode(res,playerid)
     }
-
     return code
-}
-
-fun drawTextToImage(image: BufferedImage,
-                    text: String,
-                    x: Int,
-                    y: Int,
-                    size:Int,
-                    color:Color): BufferedImage {
-    // 拿到 Graphics2D 画图对象
-    val imageGraphics: Graphics2D = image.createGraphics()
-    // 设置高清字体
-    imageGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
-    imageGraphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT)
-    imageGraphics.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY)
-    // 设置文字 color
-    imageGraphics.color = color
-    // 设置文体 style
-    imageGraphics.font = Font("微软雅黑", Font.BOLD, size)
-    // 文字上图
-    imageGraphics.drawString(text, x, y )
-    return image
-}
-
-fun drawImageToImage(img1: BufferedImage,
-                     img2: BufferedImage,
-                     width: Int,
-                     height:Int,
-                     x: Int,
-                     y: Int): BufferedImage {
-    val imageGraphics: Graphics2D = img1.createGraphics()
-    imageGraphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR)
-    imageGraphics.drawImage(img2.getScaledInstance(width,height,Image.SCALE_SMOOTH),x,y,null)
-    return img1
 }
 
 fun playerPicturMode(res:ApexResponsePlayer,playerid : String,image : ApexImage){
     val background: BufferedImage = ImageCache("apex","https://shennoter.top/wp-content/uploads/mirai/apex.png")
-    val rank: BufferedImage = ImageCache("rank_"+res.global.rank.rankName,res.global.rank.rankImg)
-    val arena: BufferedImage = ImageCache("arena_"+res.global.arena.rankName,res.global.arena.rankImg)
+    val rank: BufferedImage = ImageCache("rank_"+res.global.rank.rankName+res.global.rank.rankDiv,res.global.rank.rankImg)
+    val arena: BufferedImage = ImageCache("arena_"+res.global.arena.rankName+res.global.arena.rankDiv,res.global.arena.rankImg)
     val legend: BufferedImage = ImageCache("legend_"+res.legends.selected.LegendName,res.legends.selected.ImgAssets.banner)
     var name = res.global.name
     if (name == ""){
@@ -134,11 +93,11 @@ fun playerPicturMode(res:ApexResponsePlayer,playerid : String,image : ApexImage)
         for (i in 0..numberOfTracker) {
             img = drawTextToImage(img,res.legends.selected.data[i].name + ":" + "${res.legends.selected.data[i].value}", 69,1700 + i * 80,50,Color.white)
             if (res.legends.selected.data[i].name == "BR Kills"){
-                kills = res.legends.selected.data[i].value
+                kills = res.legends.selected.data[i].value.toInt()
                 flag1 = true
             }
             if (res.legends.selected.data[i].name == "BR Damage"){
-                damage = res.legends.selected.data[i].value
+                damage = res.legends.selected.data[i].value.toInt()
                 flag2 =true
             }
         }

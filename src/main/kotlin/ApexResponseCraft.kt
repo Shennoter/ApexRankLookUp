@@ -1,5 +1,3 @@
-package pers.shennoter
-
 class ApexResponseCraft : ArrayList<ApexResponseCraftItem>()
 
 data class ApexResponseCraftItem(
