@@ -24,7 +24,7 @@
 |配置名称 |功能|
 |:---|:---|
 |`ApiKey`|ApiKey：如果没有请到 https://apexlegendsapi.com/ 获取|
-|`mode`|机器人回复方式： `pic`为图片，`text`为文字(只适用于玩家信息和地图轮换)|  
+|`mode`|机器人回复方式： `pic`为图片，`text`为文字(玩家信息、地图轮换和猎杀门槛)|  
 |`picType` | 图片质量：`PNG`原图，更清晰；`JPG`更小，发送更快|
 |`cacheExpireTime` | 缓存图片过期时间，默认为`30`（单位：天）|
 |`cacheAutoDel` | 是否自动清除过期缓存，`true`为是，`false`为否|
