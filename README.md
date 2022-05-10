@@ -4,10 +4,12 @@
 ![license](https://shields.io/github/license/Shennoter/ApexRankLookUp.svg?style=for-the-badge)
 ![version](https://shields.io/github/v/release/Shennoter/ApexRankLookUp?display_name=tag&style=for-the-badge&color=ff69b4)
 - 一个基于[mirai-console](https://github.com/mamoe/mirai)的插件，用于查询apex英雄当前地图轮换、玩家信息和复制器轮换
-- 使用前请到[https://apexlegendsapi.com/](https://apexlegendsapi.com/)获取ApiKey填入config/pers.shennoter.ranklookup/config.yml
 - 由于api限制，短时间内请求次数过多可能查询失败，请稍等后重试
+## 使用前准备
+- 确认已经安装[chat-command插件](https://github.com/project-mirai/chat-command) 
+- 在[https://apexlegendsapi.com/](https://apexlegendsapi.com/)获取ApiKey填入`config/pers.shennoter.ranklookup/config.yml`
+- 安装字体“**微软雅黑**”，否则可能发生错误。不装也可以，但如果报错就得装了
 ## 指令
-使用前请确认已经安装[chat-command插件](https://github.com/project-mirai/chat-command)  
 本插件权限ID为 `pers.shennoter.ranklookup:*`     
 详见用户手册[PermissionCommand](https://github.com/mamoe/mirai/blob/dev/mirai-console/docs/BuiltInCommands.md#permissioncommand)  
 如果输了命令没反应请在控制台输入`/permission add <想要给予权限的对象> pers.shennoter.ranklookup:<想要开启的指令>`  
