@@ -1,8 +1,15 @@
+<div align="center">
+  
+  
 # ApexLookUp
 ![satrs](https://img.shields.io/github/stars/Shennoter/ApexRankLookUp.svg?style=for-the-badge&color=yellow)
 ![downloads](https://shields.io/github/downloads/Shennoter/ApexRankLookUp/total.svg?style=for-the-badge)
 ![license](https://shields.io/github/license/Shennoter/ApexRankLookUp.svg?style=for-the-badge)
 ![version](https://shields.io/github/v/release/Shennoter/ApexRankLookUp?display_name=tag&style=for-the-badge&color=ff69b4)
+  
+</div>
+
+
 - 一个基于[mirai-console](https://github.com/mamoe/mirai)的插件，可用于查询Apex英雄的
   - 地图轮换
   - 玩家信息
