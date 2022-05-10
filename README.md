@@ -3,7 +3,7 @@
 ![downloads](https://shields.io/github/downloads/Shennoter/ApexRankLookUp/total.svg?style=for-the-badge)
 ![license](https://shields.io/github/license/Shennoter/ApexRankLookUp.svg?style=for-the-badge)
 ![version](https://shields.io/github/v/release/Shennoter/ApexRankLookUp?display_name=tag&style=for-the-badge&color=ff69b4)
-- 一个基于[mirai-console](https://github.com/mamoe/mirai)的插件，用于查询apex英雄当前地图轮换、玩家信息和复制器轮换
+- 一个基于[mirai-console](https://github.com/mamoe/mirai)的插件，可用于查询apex英雄当前地图轮换、玩家信息、复制器轮换、猎杀门槛、官方活动新闻
 - 由于api限制，短时间内请求次数过多可能查询失败，请稍等后重试
 ## 食用前准备
 - 确认已经安装[chat-command插件](https://github.com/project-mirai/chat-command) 
