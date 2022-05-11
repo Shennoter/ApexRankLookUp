@@ -10,7 +10,7 @@
 </div>
 
 
-一个基于[mirai-console](https://github.com/mamoe/mirai)的插件，可用于查询Apex英雄的
+> 一个基于[mirai-console](https://github.com/mamoe/mirai)的插件，可用于查询Apex英雄的
 - 地图轮换
 - 玩家信息
 - 复制器轮换
