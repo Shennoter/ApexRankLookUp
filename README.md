@@ -11,11 +11,11 @@
 
 
 > 一个基于[mirai-console](https://github.com/mamoe/mirai)的插件，可用于查询Apex英雄的
-- 地图轮换
-- 玩家信息
-- 复制器轮换
-- 猎杀门槛
-- 官方活动新闻
+> - 地图轮换
+> - 玩家信息
+> - 复制器轮换
+> - 猎杀门槛
+> - 官方活动新闻
 ## 食用前准备
 - 安装[chat-command插件](https://github.com/project-mirai/chat-command) 
 - 在[https://apexlegendsapi.com/](https://apexlegendsapi.com/)获取ApiKey填入`config/pers.shennoter.ranklookup/config.yml`
