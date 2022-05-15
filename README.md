@@ -2,6 +2,7 @@
   
   
 # ApexLookUp
+![logo](https://github.com/Shennoter/ApexRankLookUp/blob/main/logo200.png)  
 ![satrs](https://img.shields.io/github/stars/Shennoter/ApexRankLookUp.svg?style=for-the-badge&color=yellow)
 ![downloads](https://shields.io/github/downloads/Shennoter/ApexRankLookUp/total.svg?style=for-the-badge)
 ![license](https://shields.io/github/license/Shennoter/ApexRankLookUp.svg?style=for-the-badge)
