@@ -53,3 +53,8 @@
   ![predator](https://github.com/Shennoter/ApexRankLookUp/blob/main/predatoreg.png)
 - 查询官方活动新闻  
   ![news](https://github.com/Shennoter/ApexRankLookUp/blob/main/news.png)
+
+ ## Todo
+ - [ ] 分数监听
+ - [ ] 轮换提醒
+ - [ ] HTTP代理
