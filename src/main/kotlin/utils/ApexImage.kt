@@ -1,13 +1,12 @@
 package pers.shennoter
 
+import pers.shennoter.RankLookUp.dataFolder
 import java.awt.*
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URL
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.imageio.ImageIO
 
 class ApexImage {
@@ -24,72 +23,13 @@ class ApexImage {
 }
 
 fun ImageCache(name: String, url: String): BufferedImage {
-    val file = File("./data/pers.shennoter.ranklookup/$name.png")
+    val file = File("${dataFolder}/imgs/$name.png")
     if (!file.exists()) {
         val image: BufferedImage = ImageIO.read(URL(url))
-        ImageIO.write(image, "png", File("./data/pers.shennoter.ranklookup/$name.png"))
+        ImageIO.write(image, "png", File("${dataFolder}/imgs/$name.png"))
     }
-    return ImageIO.read(File("./data/pers.shennoter.ranklookup/$name.png"))
+    return ImageIO.read(File("${dataFolder}/imgs/$name.png"))
 }
-
-//删除缓存文件
-fun removeFileByTime(isAuto: Boolean) :String{
-    //获取目录下所有文件
-    val dirPath = "./data/pers.shennoter.ranklookup/"
-    val allFile = getDirAllFile(File(dirPath))
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
-    //获取当前时间
-    var end = Date(System.currentTimeMillis())
-    try {
-        end = dateFormat.parse(dateFormat.format(Date(System.currentTimeMillis())))
-    } catch (e: Exception) {
-        return "缓存文件日期格式错误"
-    }
-    for (file in allFile) { //ComDef
-        try {
-            //文件时间减去当前时间
-            val start: Date = dateFormat.parse(dateFormat.format(Date(file.lastModified())))
-            val diff: Long = end.time - start.time //这样得到的差值是微秒级别
-            val days = diff / (1000 * 60 * 60 * 24)
-            if(isAuto){
-                if (Config.cacheExpireTime <= days) { //删除cacheExpireTime天前的缓存文件
-                    deleteFile(file)
-                }
-            }
-            else{
-                deleteFile(file)
-            }
-        } catch (e: Exception) {
-            return "删除失败"
-        }
-    }
-    return "缓存删除成功"
-}
-
-//删除文件夹及文件夹下所有文件
-fun deleteFile(file: File) {
-    if (file.isDirectory) {
-        val files = file.listFiles()
-        for (i in files.indices) {
-            val f = files[i]
-            deleteFile(f)
-        }
-        file.delete()
-    } else if (file.exists()) {
-        file.delete()
-    }
-}
-
-//获取指定目录下一级文件
-fun getDirAllFile(file: File): List<File> {
-    val fileList: MutableList<File> = ArrayList()
-    val fileArray = file.listFiles() ?: return fileList
-    for (f in fileArray) {
-        fileList.add(f)
-    }
-    return fileList
-}
-
 
 //将文字添加到图片
 fun drawTextToImage(image: BufferedImage,
@@ -108,7 +48,7 @@ fun drawTextToImage(image: BufferedImage,
     // 设置文字 color
     imageGraphics.color = color
     // 设置文体 style
-    imageGraphics.font = Font("微软雅黑", Font.BOLD, size)
+    imageGraphics.font = Font(Config.font, Font.BOLD, size)
     // 文字上图
     imageGraphics.drawString(text, x, y )
     return image
