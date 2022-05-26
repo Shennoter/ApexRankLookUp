@@ -72,7 +72,7 @@ fun drawImageToImage(img1: BufferedImage,
 //拼接图片
 fun mergeImage(isHorizontal: Boolean, vararg imgs: BufferedImage): BufferedImage {
     // 生成新图片
-    var destImage: BufferedImage? = null
+    var destImage: BufferedImage?
     // 计算新图片的长和高
     var allw = 0
     var allh = 0

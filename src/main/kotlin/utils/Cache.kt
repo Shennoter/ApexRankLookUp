@@ -5,13 +5,21 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
+fun removeCache(isAuto: Boolean): String {
+    val imgs = File("$dataFolder/imgs")
+    val score = File("$dataFolder/score")
+    removeFileByTime(isAuto, imgs)
+    return removeFileByTime(isAuto, score)
+}
+
+
 //删除缓存文件
-fun removeFileByTime(isAuto: Boolean) :String{
+fun removeFileByTime(isAuto: Boolean,folder:File) :String{
     //获取目录下所有文件
-    val allFile = getDirAllFile(File("$dataFolder/imgs"))
+    val allFile = getDirAllFile(folder)
     val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
     //获取当前时间
-    var end = Date(System.currentTimeMillis())
+    var end: Date
     try {
         end = dateFormat.parse(dateFormat.format(Date(System.currentTimeMillis())))
     } catch (e: Exception) {
@@ -42,9 +50,11 @@ fun removeFileByTime(isAuto: Boolean) :String{
 fun deleteFile(file: File) {
     if (file.isDirectory) {
         val files = file.listFiles()
-        for (i in files.indices) {
-            val f = files[i]
-            deleteFile(f)
+        if (files != null) {
+            for (i in files.indices) {
+                val f = files[i]
+                deleteFile(f)
+            }
         }
         file.delete()
     } else if (file.exists()) {

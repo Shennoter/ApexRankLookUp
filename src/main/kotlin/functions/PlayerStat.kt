@@ -1,47 +1,43 @@
 import com.google.gson.Gson
 import pers.shennoter.*
+import utils.getRes
 import java.awt.*
 import java.awt.image.BufferedImage
-import java.io.FileNotFoundException
-import java.net.URL
 
-fun playerStat(playerid: String,image: ApexImage): String{
-    if(Config.ApiKey == "") {
+
+fun playerStat(playerid: String,image: ApexImage): String?{
+    if(Config.apiKey == "") {
         return "未填写ApiKey"
     }
-    var requestStr = ""
     var id = playerid
     if("@@" in playerid){
         id = playerid.replace("@@", "%20")
     }
-    var code = "查询成功"
-    try {
-        val url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=${Config.ApiKey}"
-        requestStr = URL(url).readText()
-
-    }catch(e: FileNotFoundException){
-        code = "查询出错：Player exists but has never played Apex Legends"
-        RankLookUp.logger.error(code)
-        return code
-    }catch (e:Exception){
-        code = "错误，短时间内请求过多,请稍后再试"
-        RankLookUp.logger.error(code)
-        return code
+    var url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=${Config.apiKey}"
+    var requestStr = getRes(url)
+    if (requestStr.first == 1) {
+        if(Config.extendApiKey.isNotEmpty()){ //如果api过热且config有额外apikey，则使用额外apikey重试
+            run breaking@{
+                Config.extendApiKey.forEach {
+                    url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=$it"
+                    requestStr = getRes(url)
+                    if (requestStr.first == 0) return@breaking
+                }
+            }
+        }
     }
-    if (requestStr.contains("Error")){
-        var errorInfo = ""
-        val res = Gson().fromJson(requestStr, ApexResponseError::class.java)
-        errorInfo = "查询出错：" + res.Error
-        return errorInfo
+    if(requestStr.first == 1){ //如果还是不行就报错返回
+        RankLookUp.logger.error(requestStr.second)
+        return requestStr.second
     }
-    val res = Gson().fromJson(requestStr, ApexResponsePlayer::class.java)
-    if (Config.mode == "pic"){
+    val res = Gson().fromJson(requestStr.second, ApexResponsePlayer::class.java)
+    return if(Config.mode == "pic"){
         playerPicturMode(res,playerid,image)
+        "查询成功"
     }
     else{
-        code = playerTextMode(res,playerid)
+        playerTextMode(res,playerid)
     }
-    return code
 }
 
 fun playerPicturMode(res:ApexResponsePlayer,playerid : String,image : ApexImage){
@@ -53,15 +49,15 @@ fun playerPicturMode(res:ApexResponsePlayer,playerid : String,image : ApexImage)
     if (name == ""){
         name = playerid
     }
-    var img = drawTextToImage(background,"${res.global.rank.rankScore}",541,800,70,Color.white)
+    var img = drawTextToImage(background, res.global.rank.rankScore,541,800,70,Color.white)
     //图片渲染
     img = drawImageToImage(img,rank,260,260,410,460)
     img = drawImageToImage(img,arena,260,260,1280,450)
     img = drawImageToImage(img,legend,1980,567,0,1050)
     //文字渲染
-    img = drawTextToImage(img, "${res.global.arena.rankScore}",1445,795,70,Color.white)
+    img = drawTextToImage(img, res.global.arena.rankScore,1445,795,70,Color.white)
     img = drawTextToImage(img,name, 455,200,100,Color.white)
-    img = drawTextToImage(img,"${res.global.level}", 181,336,35,Color.black)
+    img = drawTextToImage(img, res.global.level, 181,336,35,Color.black)
     if (res.global.rank.ladderPosPlatform == -1){
         img = drawTextToImage(img, "无", 668, 905, 70, Color.white)
     }
@@ -87,9 +83,9 @@ fun playerPicturMode(res:ApexResponsePlayer,playerid : String,image : ApexImage)
         img = drawTextToImage(img,"无", 69,1700,50,Color.white)
     }
     else {
-        var numberOfTracker = res.legends.selected.data.indexOf(res.legends.selected.data.last())
+        val numberOfTracker = res.legends.selected.data.indexOf(res.legends.selected.data.last())
         for (i in 0..numberOfTracker) {
-            img = drawTextToImage(img,res.legends.selected.data[i].name + ":" + "${res.legends.selected.data[i].value}", 69,1700 + i * 80,50,Color.white)
+            img = drawTextToImage(img,res.legends.selected.data[i].name + ":" + res.legends.selected.data[i].value, 69,1700 + i * 80,50,Color.white)
             if (res.legends.selected.data[i].name == "BR Kills"){
                 kills = res.legends.selected.data[i].value.toInt()
                 flag1 = true
@@ -104,8 +100,7 @@ fun playerPicturMode(res:ApexResponsePlayer,playerid : String,image : ApexImage)
             img = drawTextToImage(img,"伤害击杀比: $quotient", 457,327,40,Color.white)
         }
     }
-    var status = ""
-    status = if (res.realtime.isOnline == 0){
+    var status: String = if (res.realtime.isOnline == 0){
         "离线"
     }else{
         "在线"
@@ -166,7 +161,7 @@ fun playerTextMode(res:ApexResponsePlayer,playerid : String):String{
         player += "无"
     }
     else {
-        var numberOfTracker = res.legends.selected.data.indexOf(res.legends.selected.data.last())
+        val numberOfTracker = res.legends.selected.data.indexOf(res.legends.selected.data.last())
         for (i in 0..numberOfTracker) {
             player += res.legends.selected.data[i].name + ":" + res.legends.selected.data[i].value + "\n"
         }

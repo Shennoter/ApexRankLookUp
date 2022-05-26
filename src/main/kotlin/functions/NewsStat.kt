@@ -1,36 +1,42 @@
 import com.google.gson.Gson
 import pers.shennoter.*
+import utils.getRes
 import java.awt.image.BufferedImage
-import java.net.URL
 
-fun newsStat(image: ApexImage,index:Int):String{
-    if(Config.ApiKey == "") {
+fun newsStat(image: ApexImage,index:Int):String?{
+    if(Config.apiKey == "") {
         return "未填写ApiKey"
     }
-    var requestStr = ""
-    var code = "查询成功"
-    try {
-        val url = "https://api.mozambiquehe.re/news?&auth=${Config.ApiKey}"
-        requestStr = URL(url).readText()
-    }catch (e:Exception){
-        code = "错误，短时间内请求过多,请稍后再试"
-        RankLookUp.logger.error(code)
-        return code
+    var url = "https://api.mozambiquehe.re/news?&auth=${Config.apiKey}"
+    var requestStr = getRes(url)
+    if (requestStr.first == 1) {
+        if(Config.extendApiKey.isNotEmpty()){ //如果api过热且config有额外apikey，则使用额外apikey重试
+            run breaking@{
+                Config.extendApiKey.forEach {
+                    url = "https://api.mozambiquehe.re/news?&auth=$it"
+                    requestStr = getRes(url)
+                    if (requestStr.first == 0) return@breaking //如果返回正确信息则跳出循环
+                }
+            }
+        }
     }
-    val res = Gson().fromJson(requestStr, ApexResponseNews::class.java)
+    if (requestStr.first == 1) { //如果还是不行就报错返回
+        RankLookUp.logger.error(requestStr.second)
+        return requestStr.second
+    }
+    val res = Gson().fromJson(requestStr.second, ApexResponseNews::class.java)
     if(index < 1 || index > res.size){
         return "序号无效"
     }
-    if(index-1 <= res.size) {
-        val img: BufferedImage = ImageCache("news_" + res[index-1].short_desc.hashCode(), res[index-1].img)
-        val title = res[index-1].title
-        val link = res[index-1].link
-        val digest = res[index-1].short_desc
-        code = "标题：$title\n"
-        code += "链接：$link\n"
-        code += "摘要:$digest\n"
-        code += "序号：$index/${res.size}"
-        image.save(img)
-    }
-    return code
+    val img: BufferedImage = ImageCache("news_" + res[index-1].short_desc.hashCode(), res[index-1].img)
+    val title = res[index-1].title
+    val link = res[index-1].link
+    val digest = res[index-1].short_desc
+    var msg = "标题：$title\n"
+    msg += "链接：$link\n"
+    msg += "摘要:$digest\n"
+    msg += "序号：$index/${res.size}"
+    image.save(img)
+
+    return msg
 }

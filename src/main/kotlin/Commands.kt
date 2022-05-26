@@ -1,6 +1,5 @@
 import com.google.gson.Gson
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+
 import net.mamoe.mirai.console.command.CommandSender
 import net.mamoe.mirai.console.command.CompositeCommand
 import net.mamoe.mirai.console.command.SimpleCommand
@@ -8,9 +7,9 @@ import net.mamoe.mirai.contact.Contact.Companion.sendImage
 import pers.shennoter.*
 import pers.shennoter.RankLookUp.dataFolder
 import pers.shennoter.RankLookUp.logger
+import utils.getRes
 import java.io.File
 import java.net.URL
-import java.util.*
 
 object Player : SimpleCommand(
     RankLookUp, "apexid","玩家查询" ,
@@ -31,11 +30,11 @@ object Player : SimpleCommand(
                     RankLookUp.logger.info(code)
                 } else {
                     RankLookUp.logger.error(code)
-                    subject?.sendMessage(code)
+                    subject?.sendMessage(code!!)
                 }
             }
             "text"->{
-                subject?.sendMessage(code)
+                subject?.sendMessage(code!!)
             }
             else -> subject?.sendMessage("config.yml配置错误，请检查")
         }
@@ -61,11 +60,11 @@ object Map : SimpleCommand(
                     RankLookUp.logger.info(code)
                 } else {
                     RankLookUp.logger.error(code)
-                    subject?.sendMessage(code)
+                    subject?.sendMessage(code!!)
                 }
             }
             "text"->{
-                subject?.sendMessage(code)
+                subject?.sendMessage(code!!)
             }
             else -> subject?.sendMessage("config.yml配置错误，请检查")
         }
@@ -90,7 +89,7 @@ object Craft : SimpleCommand(
         }
         else {
             RankLookUp.logger.error(code)
-            subject?.sendMessage(code)
+            subject?.sendMessage(code!!)
         }
     }
 }
@@ -114,11 +113,11 @@ object Predator : SimpleCommand(
                     RankLookUp.logger.info(code)
                 } else {
                     RankLookUp.logger.error(code)
-                    subject?.sendMessage(code)
+                    subject?.sendMessage(code!!)
                 }
             }
             "text"->{
-                subject?.sendMessage(code)
+                subject?.sendMessage(code!!)
             }
             else -> subject?.sendMessage("config.yml配置错误，请检查")
         }
@@ -140,7 +139,7 @@ object News : SimpleCommand(
         else {
             try {
                 subject?.sendImage(image.get())
-                subject?.sendMessage(code)
+                subject?.sendMessage(code!!)
             } catch (e: Exception) {
                 RankLookUp.logger.error("查询出错")
                 subject?.sendMessage("查询出错")
@@ -155,24 +154,35 @@ object Cache : SimpleCommand(
 ) {
     @Handler
     suspend fun CommandSender.apexDelCache() {
-        val result = removeFileByTime(false)
+        val result = removeCache(true)
         RankLookUp.logger.info(result)
         subject?.sendMessage(result)
     }
 }
 
 object Listener : CompositeCommand(
-    RankLookUp, "apexadd", description = "添加监听",
+    RankLookUp, "apexadd",
+    description = "添加监听",
 ) {
     @SubCommand
     suspend fun CommandSender.id(id: String) {
-        val url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=${Config.ApiKey}"
-        try {
-            URL(url).readText()
+        var url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=${Config.apiKey}"
+        var res = getRes(url)
+        if (res.first == 1) {
+            if(Config.extendApiKey.isNotEmpty()){ //如果api过热且config有额外apikey，则使用额外apikey重试
+                run breaking@{
+                    Config.extendApiKey.forEach {
+                        url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=$it"
+                        res = getRes(url)
+                        if (res.first == 0) return@breaking
+                    }
+                }
+            }
         }
-        catch(e:Exception){
-            subject?.sendMessage("玩家ID不存在")
-            logger.error("玩家ID不存在")
+        if(res.first == 1){ //如果还是不行就报错返回
+            subject?.sendMessage(res.second!!)
+            logger.error(res.second)
+            return
         }
         val gson = Gson()
         val listendPlayer : ListendPlayer = gson.fromJson(File("$dataFolder/Data.json").readText(), ListendPlayer::class.java)
@@ -190,9 +200,12 @@ object Listener : CompositeCommand(
         }
         File("$dataFolder/Data.json").writeText(gson.toJson(listendPlayer))
         logger.info("添加对${id}:${subject?.id}的监听成功")
-        subject?.sendMessage("添加对${id}:${subject?.id}的监听成功")
-        playerJob?.cancel()
-        playerJob = playerStatListener()
+        subject?.sendMessage("监听添加成功：\nOrigin ID：${id}\n群号：${subject?.id}")
+        if(Config.listener) {
+            logger.info("重启监听线程")
+            playerTask?.cancel()
+            playerTask = playerStatListener()
+        }
     }
 
     @SubCommand
@@ -207,33 +220,43 @@ object Listener : CompositeCommand(
             groups.data.add(subject?.id)
         }
         File("$dataFolder/Reminder.json").writeText(gson.toJson(groups))
-        logger.info("已添加对${subject?.id}的地图轮换提醒")
-        subject?.sendMessage("已添加对${subject?.id}的地图轮换提醒")
-        mapTask?.cancel()
-        mapTask = mapReminder()
+        logger.info("已添加对[${subject?.id}]的地图轮换提醒")
+        subject?.sendMessage("已添加对[${subject?.id}]的地图轮换提醒")
+        if(Config.mapRotationReminder) {
+            logger.info("重启监听线程")
+            mapTask?.cancel()
+            mapTask = mapReminder()
+        }
     }
 }
 
 object ListenerRemove : CompositeCommand(
-    RankLookUp, "apexremove","移除id" ,
-    description = "取消对某玩家的监听"
+    RankLookUp, "apexremove",
+    description = "取消监听"
 ) {
     @SubCommand
     suspend fun CommandSender.id(id: String) {
         val gson = Gson()
         val listendPlayer : ListendPlayer = gson.fromJson(File("$dataFolder/Data.json").readText(), ListendPlayer::class.java)
         if(listendPlayer.data.contains(id) && listendPlayer.data[id]?.contains(subject?.id) == true) {
-            listendPlayer.data[id]?.remove(subject?.id)
-            subject?.sendMessage("已取消对${id}:${subject?.id}的监听")
-            logger.info("已取消对${id}:${subject?.id}的监听")
-            playerJob?.cancel()
-            playerJob = playerStatListener()
+            listendPlayer.data[id]?.remove(subject?.id) //删除id对应群号
+            if(listendPlayer.data[id].isNullOrEmpty()){ //若id对应的所有群号都被删除，则删除此id
+                listendPlayer.data.remove(id)
+            }
+            File("$dataFolder/Data.json").writeText(gson.toJson(listendPlayer))
+            subject?.sendMessage("已取消对${id}[${subject?.id}]的监听")
+            logger.info("已取消对${id}[${subject?.id}]的监听")
+            if(Config.listener) {
+                logger.info("重启监听线程")
+                playerTask?.cancel()
+                playerTask = playerStatListener()
+            }
         }
         else {
-            subject?.sendMessage("${id}:${subject?.id}不在监听列表")
-            logger.error("${id}:${subject?.id}不在监听列表")
+            subject?.sendMessage("${id}[${subject?.id}]不在监听列表")
+            logger.error("${id}[${subject?.id}]不在监听列表")
         }
-        File("$dataFolder/Data.json").writeText(gson.toJson(listendPlayer))
+
     }
 
     @SubCommand
@@ -242,10 +265,14 @@ object ListenerRemove : CompositeCommand(
         val groups : GroupReminding = gson.fromJson(File("${RankLookUp.dataFolder}/Reminder.json").readText(), GroupReminding::class.java)
         if(groups.data.contains(subject?.id)){
             groups.data.remove(subject?.id)
+            File("$dataFolder/Reminder.json").writeText(gson.toJson(groups))
             subject?.sendMessage("已取消该群提醒")
-            logger.error("已取消该群提醒")
-            mapTask?.cancel()
-            mapTask = mapReminder()
+            logger.info("已取消该群提醒")
+            if(Config.mapRotationReminder) {
+                logger.info("重启监听线程")
+                mapTask?.cancel()
+                mapTask = mapReminder()
+            }
         }
         else{
             subject?.sendMessage("该群不在提醒列表")

@@ -17,10 +17,11 @@ import net.mamoe.mirai.console.command.*
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
 import java.io.File
+import java.util.Timer
 import java.util.TimerTask
 
-var mapTask:TimerTask? = null
-var playerJob: Job? = null
+var mapTask: TimerTask? = null
+var playerTask: TimerTask? = null
 object RankLookUp : KotlinPlugin(
     JvmPluginDescription(
         id = "pers.shennoter.RankLookUp",
@@ -41,7 +42,7 @@ object RankLookUp : KotlinPlugin(
         CommandManager.registerCommand(Cache)
         CommandManager.registerCommand(Listener)
         CommandManager.registerCommand(ListenerRemove)
-        logger.info("Apex查询插件已载入")
+        logger.info("众神之父赐予我视野！")
         val folder1 = File("./data/pers.shennoter.RankLookUp/")
         if(!folder1.exists()) {
             folder1.mkdirs()
@@ -62,20 +63,23 @@ object RankLookUp : KotlinPlugin(
         if (!remindingGroups.exists()) {
             File("$dataFolder/Reminder.json").writeText("{\"data\":[0]}")
         }
-        if(Config.ApiKey == ""){
-            logger.error("未找到ApiKey，请到 https://apexlegendsapi.com/ 获取ApiKey填入 ./config/pers.shennoter.RankLookUp/config.yml 中并重启mirai-console")
+
+        if(Config.cacheAutoDel){
+            RankLookUp.logger.info(removeCache(true))
         }
-        if(Config.cacheAutoDel == "true"){
-            RankLookUp.logger.info(removeFileByTime(true))
+        if(Config.apiKey == ""){
+            logger.error("未找到ApiKey，请到https://apexlegendsapi.com/获取ApiKey填入./config/pers.shennoter.RankLookUp/config.yml中并重启mirai-console")
         }
-        GlobalScope.launch {
-            var listendPlayer : ListendPlayer = Gson().fromJson(File("$dataFolder/Data.json").readText(), ListendPlayer::class.java)
-            if(Config.listener && listendPlayer.data.size > 1) {
-                playerJob = playerStatListener()
-            }
-            val groups : GroupReminding = Gson().fromJson(File("${RankLookUp.dataFolder}/Reminder.json").readText(), GroupReminding::class.java)
-            if(Config.mapRotationReminder && groups.data.size > 1){
-                mapTask = mapReminder()
+        else{
+            GlobalScope.launch { //启动监听任务
+                val listendPlayer : ListendPlayer = Gson().fromJson(File("$dataFolder/Data.json").readText(), ListendPlayer::class.java)
+                if(Config.listener && listendPlayer.data.size > 1) {
+                    playerTask = playerStatListener()
+                }
+                val groups : GroupReminding = Gson().fromJson(File("${RankLookUp.dataFolder}/Reminder.json").readText(), GroupReminding::class.java)
+                if(Config.mapRotationReminder && groups.data.size > 1){
+                    mapTask = mapReminder()
+                }
             }
         }
     }
@@ -90,7 +94,7 @@ object RankLookUp : KotlinPlugin(
         CommandManager.unregisterCommand(Cache)
         CommandManager.unregisterCommand(Listener)
         CommandManager.unregisterCommand(ListenerRemove)
-        logger.info("Apex查询插件已卸载")
+        logger.info("我是布洛特·亨德尔，你可以叫我倒地了但还活着！")
     }
 }
 

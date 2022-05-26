@@ -1,33 +1,39 @@
 package pers.shennoter
 
 import com.google.gson.Gson
+import utils.getRes
 import java.awt.Color
 import java.awt.image.BufferedImage
-import java.net.URL
 
-
-fun mapStat(image: ApexImage):String{
-    if(Config.ApiKey == "") {
+fun mapStat(image: ApexImage):String?{
+    if(Config.apiKey == "") {
         return "未填写ApiKey"
     }
-    var requestStr = ""
-    var code = "查询成功"
-    try {
-        val url = "https://api.mozambiquehe.re/maprotation?version=2&auth=${Config.ApiKey}"
-        requestStr = URL(url).readText()
-    }catch (e:Exception){
-        code = "错误，短时间内请求过多,请稍后再试"
-        RankLookUp.logger.error(code)
-        return code
+    var url = "https://api.mozambiquehe.re/maprotation?version=2&auth=${Config.apiKey}"
+    var requestStr = getRes(url)
+    if (requestStr.first == 1) {
+        if(Config.extendApiKey.isNotEmpty()){ //如果api过热且config有额外apikey，则使用额外apikey重试
+            run breaking@{
+                Config.extendApiKey.forEach {
+                    url = "https://api.mozambiquehe.re/maprotation?version=2&auth=$it"
+                    requestStr = getRes(url)
+                    if (requestStr.first == 0) return@breaking //如果返回正确信息则跳出循环
+                }
+            }
+        }
     }
-    val res = Gson().fromJson(requestStr, ApexResponseMap::class.java)
-    if (Config.mode == "pic"){
+    if (requestStr.first == 1) { //如果还是不行就报错返回
+        RankLookUp.logger.error(requestStr.second)
+        return requestStr.second
+    }
+    val res = Gson().fromJson(requestStr.second, ApexResponseMap::class.java)
+    return if (Config.mode == "pic"){
         mapPictureMode(res, image)
+        "查询成功"
     }
     else{
-        code = mapTextMode(res)
+        mapTextMode(res)
     }
-    return code
 }
 
 fun mapPictureMode(res: ApexResponseMap, image: ApexImage){

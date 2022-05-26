@@ -1,24 +1,31 @@
 import com.google.gson.Gson
 import pers.shennoter.*
+import utils.getRes
 import java.awt.image.BufferedImage
-import java.net.URL
 
 
-fun craftStat(image: ApexImage):String{
-    if(Config.ApiKey == "") {
+fun craftStat(image: ApexImage):String?{
+    if(Config.apiKey == "") {
         return "未填写ApiKey"
     }
-    var requestStr = ""
-    var code = "查询成功"
-    try {
-        val url = "https://api.mozambiquehe.re/crafting?&auth=${Config.ApiKey}"
-        requestStr = URL(url).readText()
-    }catch (e:Exception){
-        code = "错误，短时间内请求过多,请稍后再试"
-        RankLookUp.logger.error(code)
-        return code
+    var url = "https://api.mozambiquehe.re/crafting?&auth=${Config.apiKey}"
+    var requestStr = getRes(url)
+    if (requestStr.first == 1) {
+        if(Config.extendApiKey.isNotEmpty()){ //如果api过热且config有额外apikey，则使用额外apikey重试
+            run breaking@{
+                Config.extendApiKey.forEach {
+                    url = "https://api.mozambiquehe.re/crafting?&auth=$it"
+                    requestStr = getRes(url)
+                    if (requestStr.first == 0) return@breaking //如果返回正确信息则跳出循环
+                }
+            }
+        }
     }
-    val res = Gson().fromJson(requestStr, ApexResponseCraft::class.java)
+    if (requestStr.first == 1) { //如果还是不行就报错返回
+        RankLookUp.logger.error(requestStr.second)
+        return requestStr.second
+    }
+    val res = Gson().fromJson(requestStr.second, ApexResponseCraft::class.java)
     val daily1: BufferedImage = ImageCache("craft_"+res[0].bundleContent[0].itemType.name,res[0].bundleContent[0].itemType.asset)
     val daily2: BufferedImage = ImageCache("craft_"+res[0].bundleContent[1].itemType.name,res[0].bundleContent[1].itemType.asset)
     val weekly1: BufferedImage = ImageCache("craft_"+res[1].bundleContent[0].itemType.name,res[1].bundleContent[0].itemType.asset)
@@ -27,5 +34,5 @@ fun craftStat(image: ApexImage):String{
     val img2: BufferedImage = mergeImage(true, weekly1, weekly2)
     val img = mergeImage(false, img1, img2)
     image.save(img)
-    return code
+    return "查询成功"
 }
