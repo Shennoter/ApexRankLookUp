@@ -247,9 +247,14 @@ object ListenerRemove : CompositeCommand(
             subject?.sendMessage("已取消对${id}[${subject?.id}]的监听")
             logger.info("已取消对${id}[${subject?.id}]的监听")
             if(Config.listener) {
-                logger.info("重启监听线程")
                 playerTask?.cancel()
-                playerTask = playerStatListener()
+                if(listendPlayer.data.size > 1) {
+                    playerTask = playerStatListener()
+                    logger.info("重启监听线程")
+                }
+                else{
+                    logger.info("监听列表为空，监听线程已关闭")
+                }
             }
         }
         else {
@@ -269,9 +274,14 @@ object ListenerRemove : CompositeCommand(
             subject?.sendMessage("已取消该群提醒")
             logger.info("已取消该群提醒")
             if(Config.mapRotationReminder) {
-                logger.info("重启监听线程")
                 mapTask?.cancel()
-                mapTask = mapReminder()
+                if(groups.data.size >1) {
+                    logger.info("重启监听线程")
+                    mapTask = mapReminder()
+                }else
+                {
+                    logger.info("提醒群为空，监听线程已关闭")
+                }
             }
         }
         else{
