@@ -4,6 +4,7 @@ import net.mamoe.mirai.console.command.CommandSender
 import net.mamoe.mirai.console.command.CompositeCommand
 import net.mamoe.mirai.console.command.SimpleCommand
 import net.mamoe.mirai.contact.Contact.Companion.sendImage
+import net.mamoe.mirai.event.events.GroupMessageEvent
 import pers.shennoter.*
 import pers.shennoter.RankLookUp.dataFolder
 import pers.shennoter.RankLookUp.logger
@@ -166,6 +167,7 @@ object Listener : CompositeCommand(
 ) {
     @SubCommand
     suspend fun CommandSender.id(id: String) {
+        val event :GroupMessageEvent
         var url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=${Config.apiKey}"
         var res = getRes(url)
         if (res.first == 1) {
@@ -227,6 +229,22 @@ object Listener : CompositeCommand(
             mapTask?.cancel()
             mapTask = mapReminder()
         }
+    }
+
+    @SubCommand
+    suspend fun CommandSender.info() {
+        val gson = Gson()
+        val listendPlayer : ListendPlayer = gson.fromJson(File("$dataFolder/Data.json").readText(), ListendPlayer::class.java)
+        var playerList = "本群已订阅的ID："
+        listendPlayer.data.forEach{
+            if(it.value.contains(subject?.id)){
+                playerList += "\n" + it.key
+            }
+        }
+        if(playerList == "本群已订阅的ID："){
+            playerList += "本群无ID订阅"
+        }
+        subject?.sendMessage(playerList)
     }
 }
 

@@ -27,7 +27,6 @@ fun playerStat(playerid: String,image: ApexImage): String?{
         }
     }
     if(requestStr.first == 1){ //如果还是不行就报错返回
-        RankLookUp.logger.error(requestStr.second)
         return requestStr.second
     }
     val res = Gson().fromJson(requestStr.second, ApexResponsePlayer::class.java)

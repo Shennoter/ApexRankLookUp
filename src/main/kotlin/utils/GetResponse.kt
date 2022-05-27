@@ -36,7 +36,7 @@ fun getRes(url: String):Pair<Int,String?>{
         400 -> Pair(1, "请重试")
         403 -> Pair(1, "API key无权限或不存在")
         404 -> Pair(1, "玩家不存在")
-        405 -> Pair(1, "外部API错误")
+        405 -> Pair(1, "玩家存在但从未玩过APEX")
         410 -> Pair(1, "未知平台")
         429 -> Pair(1, "API过热，请稍后再试")
         500 -> Pair(1, "API服务器内部错误")

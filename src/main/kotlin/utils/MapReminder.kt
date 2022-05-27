@@ -67,27 +67,29 @@ fun mapReminder() :TimerTask{
             val timeToRemind = (endTime - currentTime) * 1000 + 5000 //算出下次轮换还要多久，再加上五秒防止api没及时更新
             if ((endTime != storedEndTime) || firstStart) { //若未启动提醒计时则加入计时；如果是第一次启动则忽略一次判断条件，直接开始计时
                 cache.writeText(endTime.toString())
+                if(Config.mapToRemind[res.battle_royale.current.map] == true) { //如果地图在提醒列表中则开启协程计时
                 GlobalScope.launch {
                     delay(timeToRemind)//计时到轮换时间进行提醒
-                    groups.data.forEach {
-                        if (it == 0.toLong()) return@forEach //跳过文件中的占位符
-                        if (Config.mode == "pic") { //图片模式
+                    res = Gson().fromJson(getRes(url).second, ApexResponseMap::class.java)
+                        groups.data.forEach {
+                            if (it == 0.toLong()) return@forEach //跳过文件中的占位符
+                            if (Config.mode == "pic") { //图片模式
                                 val image = ApexImage()
-                                res = Gson().fromJson(getRes(url).second, ApexResponseMap::class.java)
                                 mapPictureMode(res, image)
                                 Bot.instances.forEach { bot ->
                                     bot.getGroup(it!!)?.sendMessage("大逃杀地图已轮换")
                                     bot.getGroup(it)?.sendImage(image.get())
                                 }
                                 RankLookUp.logger.info("大逃杀地图已轮换")
-                        } else { //文字模式
-                            Bot.instances.forEach { bot ->
-                                bot.getGroup(it!!)?.sendMessage("大逃杀地图已轮换")
-                                bot.getGroup(it)?.sendMessage(mapTextMode(res))
+                            } else { //文字模式
+                                Bot.instances.forEach { bot ->
+                                    bot.getGroup(it!!)?.sendMessage("大逃杀地图已轮换")
+                                    bot.getGroup(it)?.sendMessage(mapTextMode(res))
+                                }
+                                RankLookUp.logger.info("大逃杀地图已轮换")
                             }
-                            RankLookUp.logger.info("大逃杀地图已轮换")
+                            RankLookUp.logger.info("完成一次对${it}的地图轮换提醒")
                         }
-                        RankLookUp.logger.info("完成一次对${it}的地图轮换提醒")
                     }
                 }
             }

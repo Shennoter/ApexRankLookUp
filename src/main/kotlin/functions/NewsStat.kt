@@ -21,7 +21,6 @@ fun newsStat(image: ApexImage,index:Int):String?{
         }
     }
     if (requestStr.first == 1) { //如果还是不行就报错返回
-        RankLookUp.logger.error(requestStr.second)
         return requestStr.second
     }
     val res = Gson().fromJson(requestStr.second, ApexResponseNews::class.java)
