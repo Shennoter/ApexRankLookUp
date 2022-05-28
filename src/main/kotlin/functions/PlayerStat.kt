@@ -43,7 +43,13 @@ fun playerPicturMode(res:ApexResponsePlayer,playerid : String,image : ApexImage)
     val background: BufferedImage = ImageCache("apex","https://shennoter.top/wp-content/uploads/mirai/apex.png")
     val rank: BufferedImage = ImageCache("rank_"+res.global.rank.rankName+res.global.rank.rankDiv,res.global.rank.rankImg)
     val arena: BufferedImage = ImageCache("arena_"+res.global.arena.rankName+res.global.arena.rankDiv,res.global.arena.rankImg)
-    val legend = ImageCache("legend_" + res.legends.selected.LegendName, res.legends.selected.ImgAssets.banner)
+    val legend =
+        try {
+        ImageCache("legend_" + res.legends.selected.LegendName, res.legends.selected.ImgAssets.banner)
+    }
+    catch (e:Exception){
+        BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB)
+    }
     var name = res.global.name
     if (name == ""){
         name = playerid
