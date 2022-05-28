@@ -41,6 +41,7 @@
 |`/<apexnews 新闻查询> [index]` | 查询官方活动新闻（游戏大厅显示的那些），index为文章序号|
 |`</apexadd> <id> [Origin ID] `|在该群订阅某玩家分数（当有更新时自动提醒）|
 |`</apexremove> <id> [Origin ID]`|移除该群对某玩家分数的订阅|
+|`</apexadd> <info>`|查看该群已订阅的ID|
 |`</apexadd> <map>`|在该群订阅地图轮换（当有轮换时自动提醒）|
 |`</apexremove> <map>`|移除该群对地图轮换的订阅|
 |`/<apexcache 清除缓存>` | 立即清除产生的缓存文件，解决可能出现的缓存问题|
