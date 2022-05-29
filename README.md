@@ -23,7 +23,7 @@
 > - 订阅地图轮换
 ## 食用前准备
 - 安装[chat-command插件](https://github.com/project-mirai/chat-command) 
-- 在[https://apexlegendsapi.com/](https://apexlegendsapi.com/)获取ApiKey填入`config/pers.shennoter.ranklookup/config.yml`
+- 在[https://apexlegendsapi.com/](https://apexlegendsapi.com/)获取APIkey填入`config/pers.shennoter.ranklookup/config.yml`
 - 安装字体“**微软雅黑**”，否则可能发生错误，也可在config.yml更改为自己想要的字体
 ## 指令
 - 本插件权限ID为 `pers.shennoter.ranklookup:*`     
