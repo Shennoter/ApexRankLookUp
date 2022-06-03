@@ -34,11 +34,13 @@
 
 |指令 |功能|
 |:---|:---|
+|`/<apexhelp>`|帮助|
 |`/<apexmap 地图查询>`|查询当前地图轮换情况|
 |`/<apexid 玩家查询> [Origin ID]`|查询某玩家（使用Origin ID）（空格需用@@填充）|  
 |`/<apexcraft 复制器查询>` | 查询当前复制器轮换情况|
 |`/<apexpred 猎杀查询>` | 查询当前猎杀门槛|
 |`/<apexnews 新闻查询> [index]` | 查询官方活动新闻（游戏大厅显示的那些），index为文章序号|
+|`/<apexldb>`|查询排行榜（发一个排行榜链接）|
 |`</apexadd> <id> [Origin ID] `|在该群订阅某玩家分数（当有更新时自动提醒）|
 |`</apexremove> <id> [Origin ID]`|移除该群对某玩家分数的订阅|
 |`</apexadd> <info>`|查看该群已订阅的ID|
