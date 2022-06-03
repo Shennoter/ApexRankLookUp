@@ -125,7 +125,7 @@ fun playerPicturMode(res:ApexResponsePlayer,playerid : String,image : ApexImage)
     img = drawTextToImage(img,status, 1720,1860,50,Color.white)
 
     //创建图片
-    image.save(img)
+    image.save(img,false)
 }
 
 fun playerTextMode(res:ApexResponsePlayer,playerid : String):String{

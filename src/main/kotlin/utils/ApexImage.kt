@@ -12,8 +12,13 @@ import javax.imageio.ImageIO
 class ApexImage {
     var isEmpty = true
     private val image = ByteArrayOutputStream()
-    fun save(buffImage: BufferedImage) {
-        ImageIO.write(buffImage, Config.picType, image)
+    fun save(buffImage: BufferedImage,isNews : Boolean) {
+        if(isNews){
+            ImageIO.write(buffImage, "png", image)
+        }
+        else {
+            ImageIO.write(buffImage, Config.picType, image)
+        }
         isEmpty = false
     }
 

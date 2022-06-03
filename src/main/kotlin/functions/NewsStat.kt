@@ -35,7 +35,7 @@ fun newsStat(image: ApexImage,index:Int):String?{
     msg += "链接：$link\n"
     msg += "摘要:$digest\n"
     msg += "序号：$index/${res.size}"
-    image.save(img)
+    image.save(img,true)
 
     return msg
 }

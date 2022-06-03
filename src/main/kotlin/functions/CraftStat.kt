@@ -32,6 +32,6 @@ fun craftStat(image: ApexImage):String?{
     val img1: BufferedImage = mergeImage(true, daily1, daily2)
     val img2: BufferedImage = mergeImage(true, weekly1, weekly2)
     val img = mergeImage(false, img1, img2)
-    image.save(img)
+    image.save(img,false)
     return "查询成功"
 }

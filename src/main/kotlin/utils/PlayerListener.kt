@@ -74,7 +74,9 @@ suspend fun playerStatListener(): TimerTask{
                                 Bot.instances.forEach { //遍历bot实例发送消息
                                     it.getGroup(it_group!!)
                                         ?.sendMessage("${it_id.key}的分数已更新!\n${cache.readText()} --> ${res.global.rank.rankScore}")
-                                    it.getGroup(it_group)?.sendImage(image.get())
+                                    if(Config.listenerInfoType) {
+                                        it.getGroup(it_group)?.sendImage(image.get())
+                                    }
                                 }
                             }
                             cache.writeText(res.global.rank.rankScore)
@@ -83,7 +85,9 @@ suspend fun playerStatListener(): TimerTask{
                                 Bot.instances.forEach { //遍历bot实例发送消息
                                     it.getGroup(it_group!!)
                                         ?.sendMessage("${it_id.key}的分数已更新!\n${cache.readText()} --> ${res.global.rank.rankScore}")
-                                    it.getGroup(it_group)?.sendMessage(playerTextMode(res, it_id.key))
+                                    if(Config.listenerInfoType) {
+                                        it.getGroup(it_group)?.sendMessage(playerTextMode(res, it_id.key))
+                                    }
                                 }
                             }
                             cache.writeText(res.global.rank.rankScore)  //将刚获取到的分数写入缓存文件

@@ -70,7 +70,7 @@ fun mapPictureMode(res: ApexResponseMap, image: ApexImage){
     img = drawTextToImage(img,"剩余时间："+"${res.arenasRanked.current.remainingTimer}",90,2250,35, Color.white)
     img = drawTextToImage(img,"下一轮换："+"${res.arenasRanked.next.map}",90,2300,35, Color.white)
 
-    image.save(img)
+    image.save(img,false)
 }
 
 fun mapTextMode(res:ApexResponseMap):String{

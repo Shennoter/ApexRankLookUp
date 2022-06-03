@@ -45,7 +45,7 @@ fun predatorPictureMode(res:ApexResponsePredator, image:ApexImage){
     img = drawTextToImage(img,res.AP.PC.totalMastersAndPreds.toString(),1460,1555,70, Color.white)
     img = drawTextToImage(img,"#" + res.RP.PC.foundRank.toString(),480,1130,40, Color.white)
     img = drawTextToImage(img,"#" + res.AP.PC.foundRank.toString(),1420,1130,40, Color.white)
-    image.save(img)
+    image.save(img,false)
 }
 
 fun predatorTextMode(res:ApexResponsePredator):String{

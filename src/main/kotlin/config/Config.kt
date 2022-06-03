@@ -1,6 +1,5 @@
 package pers.shennoter
 
-import io.ktor.client.engine.*
 import net.mamoe.mirai.console.data.AutoSavePluginConfig
 import net.mamoe.mirai.console.data.ValueDescription
 import net.mamoe.mirai.console.data.value
@@ -20,6 +19,8 @@ object Config : AutoSavePluginConfig("config") {
     var cacheAutoDel: Boolean by value(true)
     @ValueDescription("玩家分数监听：true为启用，false为关闭")
     var listener: Boolean by value(false)
+    @ValueDescription("玩家监听提醒方式：true为分数变化+玩家信息，false为仅提醒分数变化")
+    var listenerInfoType: Boolean by value(true)
     @ValueDescription("监听时间间隔（单位：分钟）")
     var listenInterval: Int by value(10)
     @ValueDescription("地图轮换提醒：true为启用，false为关闭")

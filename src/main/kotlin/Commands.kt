@@ -1,16 +1,13 @@
 import com.google.gson.Gson
-
 import net.mamoe.mirai.console.command.CommandSender
 import net.mamoe.mirai.console.command.CompositeCommand
 import net.mamoe.mirai.console.command.SimpleCommand
 import net.mamoe.mirai.contact.Contact.Companion.sendImage
-import net.mamoe.mirai.event.events.GroupMessageEvent
 import pers.shennoter.*
 import pers.shennoter.RankLookUp.dataFolder
 import pers.shennoter.RankLookUp.logger
 import utils.getRes
 import java.io.File
-import java.net.URL
 
 object Player : SimpleCommand(
     RankLookUp, "apexid","玩家查询" ,
@@ -160,6 +157,38 @@ object Cache : SimpleCommand(
         subject?.sendMessage(result)
     }
 }
+object Help : SimpleCommand(
+    RankLookUp, "apexhelp","查看帮助" ,
+    description = "查看本插件所有指令"
+) {
+    @Handler
+    suspend fun CommandSender.apexHelp() {
+        var help = "+—ApexLookUp功能一览—+\n"
+        help += "/apexid [ID]   查询玩家\n"
+        help += "/apexmap   查询地图\n"
+        help += "/apexcraft   查询复制器\n"
+        help += "/apexpred   查询猎杀底分\n"
+        help += "/apexnews [序号]   查询新闻\n"
+        help += "/apexldb   排行榜链接\n"
+        help += "/apexadd id [ID]   订阅玩家\n"
+        help += "/apexremove id [ID] 取消订阅\n"
+        help += "/apexadd map   订阅地图轮换\n"
+        help += "/apexremove   移除地图订阅\n"
+        help += "/apexadd info   本群已订阅ID\n"
+        help += "+————————————+"
+        subject?.sendMessage(help)
+    }
+}
+
+object LeaderBoard : SimpleCommand(
+    RankLookUp, "apexldb","查看排行榜" ,
+    description = "查看排行榜"
+) {
+    @Handler
+    suspend fun CommandSender.apexLeaderBoard() {
+        subject?.sendMessage("https://apexlegendsstatus.com/live-ranked-leaderboards/Battle_Royale/PC")
+    }
+}
 
 object Listener : CompositeCommand(
     RankLookUp, "apexadd",
@@ -167,7 +196,6 @@ object Listener : CompositeCommand(
 ) {
     @SubCommand
     suspend fun CommandSender.id(id: String) {
-        val event :GroupMessageEvent
         var url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=${Config.apiKey}"
         var res = getRes(url)
         if (res.first == 1) {

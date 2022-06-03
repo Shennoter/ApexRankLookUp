@@ -3,6 +3,8 @@ package pers.shennoter
 
 import Cache
 import Craft
+import Help
+import LeaderBoard
 import Listener
 import ListenerRemove
 import News
@@ -26,7 +28,7 @@ object RankLookUp : KotlinPlugin(
     JvmPluginDescription(
         id = "pers.shennoter.RankLookUp",
         name = "ApexLookUp",
-        version = "1.4.2",
+        version = "1.4.3",
     ){
         author("Shennoter")
     }
@@ -42,6 +44,8 @@ object RankLookUp : KotlinPlugin(
         CommandManager.registerCommand(Cache)
         CommandManager.registerCommand(Listener)
         CommandManager.registerCommand(ListenerRemove)
+        CommandManager.registerCommand(Help)
+        CommandManager.registerCommand(LeaderBoard)
         logger.info("众神之父赐予我视野！")
         val folder1 = File("./data/pers.shennoter.RankLookUp/")
         if(!folder1.exists()) {
@@ -94,6 +98,8 @@ object RankLookUp : KotlinPlugin(
         CommandManager.unregisterCommand(Cache)
         CommandManager.unregisterCommand(Listener)
         CommandManager.unregisterCommand(ListenerRemove)
+        CommandManager.unregisterCommand(Help)
+        CommandManager.unregisterCommand(LeaderBoard)
         logger.info("我是布洛特·亨德尔，你可以叫我倒地了但还活着！")
     }
 }
