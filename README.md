@@ -57,6 +57,7 @@
 |`cacheExpireTime` | 缓存图片过期时间（单位：天）|30|
 |`cacheAutoDel` | 是否自动清除过期缓存：`true`为是，`false`为否（开启mcl时自动清理）|true|
 |`listener`|玩家分数监听：true为启用，false为关闭|false|
+|`listenerInfoType`|玩家监听提醒方式：true为分数变化+玩家信息，false为仅提醒分数变化|false|
 |`listenInterval`|监听时间间隔（单位：分钟）|10|
 |`mapRotationReminder`|地图轮换提醒：true为启用，false为关闭|false|
 |`font`|字体|微软雅黑|
