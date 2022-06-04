@@ -171,9 +171,9 @@ object Help : SimpleCommand(
         help += "/apexnews [序号]   查询新闻\n"
         help += "/apexldb   排行榜链接\n"
         help += "/apexadd id [ID]   订阅玩家\n"
-        help += "/apexremove id [ID] 取消订阅\n"
+        help += "/apexrmv id [ID] 移除玩家订阅\n"
         help += "/apexadd map   订阅地图轮换\n"
-        help += "/apexremove   移除地图订阅\n"
+        help += "/apexrmv map   移除地图订阅\n"
         help += "/apexadd info   本群已订阅ID\n"
         help += "+————————————+"
         subject?.sendMessage(help)
@@ -277,7 +277,7 @@ object Listener : CompositeCommand(
 }
 
 object ListenerRemove : CompositeCommand(
-    RankLookUp, "apexremove",
+    RankLookUp, "apexrmv",
     description = "取消监听"
 ) {
     @SubCommand
