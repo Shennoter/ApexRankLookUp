@@ -11,6 +11,7 @@ import News
 import Player
 import Predator
 import Map
+import bean.Users
 import com.google.gson.Gson
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -18,7 +19,23 @@ import kotlinx.coroutines.launch
 import net.mamoe.mirai.console.command.*
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
+import net.mamoe.mirai.contact.Contact.Companion.sendImage
+import net.mamoe.mirai.event.GlobalEventChannel
+import net.mamoe.mirai.event.events.GroupMessageEvent
+import net.mamoe.mirai.event.nextEvent
+import net.mamoe.mirai.event.selectMessages
+import net.mamoe.mirai.event.whileSelectMessages
+import net.mamoe.mirai.message.data.*
+import net.mamoe.mirai.message.data.MessageSource.Key.quote
+import net.mamoe.mirai.message.nextMessage
+import net.mamoe.mirai.utils.ExternalResource.Companion.toExternalResource
+import net.mamoe.mirai.utils.ExternalResource.Companion.uploadAsImage
+import playerStat
+import utils.createFiles
+import utils.getRes
+import utils.playerRegister
 import java.io.File
+import java.io.InputStream
 import java.util.Timer
 import java.util.TimerTask
 
@@ -28,7 +45,7 @@ object RankLookUp : KotlinPlugin(
     JvmPluginDescription(
         id = "pers.shennoter.RankLookUp",
         name = "ApexLookUp",
-        version = "1.4.3",
+        version = "1.5.0",
     ){
         author("Shennoter")
     }
@@ -47,30 +64,13 @@ object RankLookUp : KotlinPlugin(
         CommandManager.registerCommand(Help)
         CommandManager.registerCommand(LeaderBoard)
         logger.info("众神之父赐予我视野！")
-        val folder1 = File("./data/pers.shennoter.RankLookUp/")
-        if(!folder1.exists()) {
-            folder1.mkdirs()
-        }
-        val folder2 = File("$dataFolder/score/")
-        if(!folder2.exists()) {
-            folder2.mkdirs()
-        }
-        val folder3 = File("$dataFolder/imgs/")
-        if(!folder3.exists()) {
-            folder3.mkdirs()
-        }
-        val listendID = File("$dataFolder/Data.json")
-        if (!listendID.exists()) {
-            File("$dataFolder/Data.json").writeText("{\"data\":{\"0\":[0]}}")
-        }
-        val remindingGroups = File("${RankLookUp.dataFolder}/Reminder.json")
-        if (!remindingGroups.exists()) {
-            File("$dataFolder/Reminder.json").writeText("{\"data\":[0]}")
-        }
-
+        //清理缓存
         if(Config.cacheAutoDel){
             RankLookUp.logger.info(removeCache(true))
         }
+        createFiles()
+        playerRegister()
+        //开始监听玩家分数和地图轮换
         if(Config.apiKey == ""){
             logger.error("未找到ApiKey，请到https://apexlegendsapi.com/获取ApiKey填入./config/pers.shennoter.RankLookUp/config.yml中并重启mirai-console")
         }
@@ -103,5 +103,6 @@ object RankLookUp : KotlinPlugin(
         logger.info("我是布洛特·亨德尔，你可以叫我倒地了但还活着！")
     }
 }
+
 
 
