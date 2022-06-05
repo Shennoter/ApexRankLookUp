@@ -50,7 +50,7 @@
 |`/<apexadd> <info>`|查看该群已订阅的ID|  
 |`/<apexadd> <map>`|在该群订阅地图轮换（当有轮换时自动提醒）|
 |`/<apexrmv> <map>`|移除该群对地图轮换的订阅|
-|`/<apexcache>`|立即清除缓存| 
+|`/<apexcache>`|立即清除缓存（无视过期时间）| 
  
 # 配置文件  
 `config/pers.shennoter.RankLookUp/config.yml`
