@@ -21,6 +21,9 @@
 > 以及
 > - 订阅玩家分数
 > - 订阅地图轮换
+# Data Source
+[https://apexlegendsapi.com/](https://apexlegendsapi.com/)  
+**THX**
 ## 食用前准备
 - 安装[chat-command插件](https://github.com/project-mirai/chat-command) 
 - 在[https://apexlegendsapi.com/](https://apexlegendsapi.com/)获取APIkey填入`config/pers.shennoter.ranklookup/config.yml`
@@ -31,7 +34,6 @@
 - 如果输了命令没反应请在控制台输入`/permission add <想要给予权限的对象> pers.shennoter.ranklookup:<想要开启的指令>`  
 - 如给予所有对象关于此插件的所有权限，请输入`/permission add * pers.shennoter.ranklookup:*`  
 - **订阅功能仅对QQ群有效，对私聊无效**  
-
 |指令|功能|
 |:---|:---|  
 |`/<apex>`|查询本人信息|  
