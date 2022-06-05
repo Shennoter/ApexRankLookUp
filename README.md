@@ -34,7 +34,8 @@
 - 如果输了命令没反应请在控制台输入`/permission add <想要给予权限的对象> pers.shennoter.ranklookup:<想要开启的指令>`  
 - 如给予所有对象关于此插件的所有权限，请输入`/permission add * pers.shennoter.ranklookup:*`  
 - **订阅功能仅对QQ群有效，对私聊无效**  
-|指令|功能|
+
+|指令|功能|  
 |:---|:---|  
 |`/<apex>`|查询本人信息|  
 |`/<apexhelp>`|帮助|
@@ -53,7 +54,7 @@
  
 # 配置文件  
 `config/pers.shennoter.RankLookUp/config.yml`
-|配置名称 |功能|缺省值|
+|配置名称|功能|缺省值|  
 |:---|:---|:---|
 |`apiKey`|apiKey：如果没有请到 https://apexlegendsapi.com/ 获取|空|
 |`extendApiKey`|额外apiKey，用于防止api过热，可不填|空|
