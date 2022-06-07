@@ -26,6 +26,6 @@ fun createFiles(){
     }
     val userFile = File("${RankLookUp.dataFolder}/Users.json")
     if(!userFile.exists()) {
-        File("${RankLookUp.dataFolder}/Users.json").writeText("{\"data\":{\"0\":0}}")
+        File("${RankLookUp.dataFolder}/Users.json").writeText("{\"data\":{0:[\"0\"]}}")
     }
 }

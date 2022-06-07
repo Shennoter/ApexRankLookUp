@@ -164,6 +164,9 @@ object Help : SimpleCommand(
     @Handler
     suspend fun CommandSender.apexHelp() {
         var help = "+—ApexLookUp功能一览—+\n"
+        help += "/apex   查询已绑定的ID\n"
+        help += "/apexbd   绑定一个ID\n"
+        help += "/apexubd   解绑一个ID\n"
         help += "/apexid [ID]   查询玩家\n"
         help += "/apexmap   查询地图\n"
         help += "/apexcraft   查询复制器\n"

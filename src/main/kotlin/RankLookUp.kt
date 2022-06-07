@@ -31,9 +31,7 @@ import net.mamoe.mirai.message.nextMessage
 import net.mamoe.mirai.utils.ExternalResource.Companion.toExternalResource
 import net.mamoe.mirai.utils.ExternalResource.Companion.uploadAsImage
 import playerStat
-import utils.createFiles
-import utils.getRes
-import utils.playerRegister
+import utils.*
 import java.io.File
 import java.io.InputStream
 import java.util.Timer
@@ -45,7 +43,7 @@ object RankLookUp : KotlinPlugin(
     JvmPluginDescription(
         id = "pers.shennoter.RankLookUp",
         name = "ApexLookUp",
-        version = "1.5.0",
+        version = "1.5.1",
     ){
         author("Shennoter")
     }
@@ -69,23 +67,10 @@ object RankLookUp : KotlinPlugin(
             RankLookUp.logger.info(removeCache(true))
         }
         createFiles()
+        startListening()
         playerRegister()
-        //开始监听玩家分数和地图轮换
-        if(Config.apiKey == ""){
-            logger.error("未找到ApiKey，请到https://apexlegendsapi.com/获取ApiKey填入./config/pers.shennoter.RankLookUp/config.yml中并重启mirai-console")
-        }
-        else{
-            GlobalScope.launch { //启动监听任务
-                val listendPlayer : ListendPlayer = Gson().fromJson(File("$dataFolder/Data.json").readText(), ListendPlayer::class.java)
-                if(Config.listener && listendPlayer.data.size > 1) {
-                    playerTask = playerStatListener()
-                }
-                val groups : GroupReminding = Gson().fromJson(File("${RankLookUp.dataFolder}/Reminder.json").readText(), GroupReminding::class.java)
-                if(Config.mapRotationReminder && groups.data.size > 1){
-                    mapTask = mapReminder()
-                }
-            }
-        }
+        playerBonder()
+        playerUnbonder()
     }
 
     override fun onDisable(){
@@ -101,6 +86,24 @@ object RankLookUp : KotlinPlugin(
         CommandManager.unregisterCommand(Help)
         CommandManager.unregisterCommand(LeaderBoard)
         logger.info("我是布洛特·亨德尔，你可以叫我倒地了但还活着！")
+    }
+}
+
+fun startListening(){
+    if(Config.apiKey == ""){
+        RankLookUp.logger.error("未找到ApiKey，请到https://apexlegendsapi.com/获取ApiKey填入./config/pers.shennoter.RankLookUp/config.yml中并重启mirai-console")
+    }
+    else{
+        GlobalScope.launch { //启动监听任务
+            val listendPlayer : ListendPlayer = Gson().fromJson(File("${RankLookUp.dataFolder}/Data.json").readText(), ListendPlayer::class.java)
+            if(Config.listener && listendPlayer.data.size > 1) {
+                playerTask = playerStatListener()
+            }
+            val groups : GroupReminding = Gson().fromJson(File("${RankLookUp.dataFolder}/Reminder.json").readText(), GroupReminding::class.java)
+            if(Config.mapRotationReminder && groups.data.size > 1){
+                mapTask = mapReminder()
+            }
+        }
     }
 }
 
