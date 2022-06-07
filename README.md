@@ -39,8 +39,8 @@
 |:---|:---|  
 |`/<apexhelp>`|帮助|
 |`/<apex>`|查询已绑定ID|  
-|`/<apexbd>`|绑定一个ID|  
-|`/<apexubd>`|解绑一个ID|  
+|`/<apexbd> [Origin ID]`|绑定一个ID|  
+|`/<apexubd> [Origin ID]`|解绑一个ID|  
 |`/<apexmap>`|查询当前地图轮换|
 |`/<apexid> [Origin ID]`|查询某玩家（空格需用@@填充）|  
 |`/<apexcraft>` | 查询复制器轮换|
