@@ -27,12 +27,19 @@ fun getRes(url: String):Pair<Int,String?>{
         client.newCall(request).execute()
     }
     catch (e:Exception){
+        e.printStackTrace()
         return Pair(1, "网络请求发起错误")
     }
     val body = response.body?.string()
     response.close()
     return when(response.code){
-        200 -> Pair(0, body)
+        200 -> {
+            if (body?.contains("Error") == true) {
+                Pair(1,"错误：" + body.split("\"")[3]) //{"Error":"Player /apexmap not found (code 103 - skipping origin backup api)"} 总有人会输入一些意料之外的数据
+            } else {
+                Pair(0, body)
+            }
+        }
         400 -> Pair(1, "请重试")
         403 -> Pair(1, "API key无权限或不存在")
         404 -> Pair(1, "玩家不存在")

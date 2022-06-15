@@ -24,7 +24,7 @@ fun craftStat(image: ApexImage):String?{
     if (requestStr.first == 1) { //如果还是不行就报错返回
         return requestStr.second
     }
-    val res = Gson().fromJson(requestStr.second, ApexResponseCraft::class.java)
+    val res = Gson().fromJson(requestStr.second, ApexResponseCraft::class.java)?: return "数据获取失败" //非null检查
     val daily1: BufferedImage = ImageCache("craft_"+res[0].bundleContent[0].itemType.name,res[0].bundleContent[0].itemType.asset)
     val daily2: BufferedImage = ImageCache("craft_"+res[0].bundleContent[1].itemType.name,res[0].bundleContent[1].itemType.asset)
     val weekly1: BufferedImage = ImageCache("craft_"+res[1].bundleContent[0].itemType.name,res[1].bundleContent[0].itemType.asset)

@@ -23,7 +23,7 @@ fun newsStat(image: ApexImage,index:Int):String?{
     if (requestStr.first == 1) { //如果还是不行就报错返回
         return requestStr.second
     }
-    val res = Gson().fromJson(requestStr.second, ApexResponseNews::class.java)
+    val res = Gson().fromJson(requestStr.second, ApexResponseNews::class.java)?: return "数据获取失败" //非null检查
     if(index < 1 || index > res.size){
         return "序号无效"
     }

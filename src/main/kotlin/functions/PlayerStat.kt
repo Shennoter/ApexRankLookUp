@@ -15,13 +15,24 @@ fun playerStat(playerid: String,image: ApexImage): String?{
     }
     var url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=${Config.apiKey}"
     var requestStr = getRes(url)
-    if (requestStr.first == 1) {
-        if(Config.extendApiKey.isNotEmpty()){ //如果api过热且config有额外apikey，则使用额外apikey重试
+    if(requestStr.first == 1){ //如出错则首先查找其他平台
+        run breaking@{
+            listOf("PS4", "X1").forEach { platform ->
+                url = "https://api.mozambiquehe.re/bridge?version=5&platform=$platform&player=$id&auth=${Config.apiKey}"
+                requestStr = getRes(url)
+                if (requestStr.first == 0) return@breaking
+            }
+        }
+    }
+    if (requestStr.first == 1) { //如果api过热且config有额外apikey，则使用额外apikey重试
+        if(Config.extendApiKey.isNotEmpty()){
             run breaking@{
-                Config.extendApiKey.forEach {
-                    url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=$id&auth=$it"
+                Config.extendApiKey.forEach { key ->
+                    listOf("PC","PS4","X1").forEach { platform ->
+                    url = "https://api.mozambiquehe.re/bridge?version=5&platform=$platform&player=$id&auth=$key"
                     requestStr = getRes(url)
                     if (requestStr.first == 0) return@breaking
+                    }
                 }
             }
         }
@@ -29,7 +40,7 @@ fun playerStat(playerid: String,image: ApexImage): String?{
     if(requestStr.first == 1){ //如果还是不行就报错返回
         return requestStr.second
     }
-    val res = Gson().fromJson(requestStr.second, ApexResponsePlayer::class.java)
+    val res = Gson().fromJson(requestStr.second, ApexResponsePlayer::class.java) ?: return "数据获取失败" //非null检查
     return if(Config.mode == "pic"){
         playerPicturMode(res,playerid,image)
         "查询成功"

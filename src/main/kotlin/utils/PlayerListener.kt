@@ -16,7 +16,17 @@ import utils.getRes
 import java.io.File
 import java.util.*
 
-suspend fun playerStatListener(): TimerTask{
+
+var playerTask: TimerTask? = null
+var playerTimer: Timer? = Timer()
+
+suspend fun playerStatListener(){
+    //取消上一个Timer和TimerTask
+    playerTask?.cancel()
+    playerTask = null
+    playerTimer?.cancel()
+    playerTimer?.purge()
+    playerTimer = null
     val listendPlayer: ListendPlayer = Gson().fromJson(File("$dataFolder/Data.json").readText(), ListendPlayer::class.java)
     listendPlayer.data.forEach { //遍历玩家id创建分数缓存
         if (it.key == "0") return@forEach //跳过占位符
@@ -41,7 +51,7 @@ suspend fun playerStatListener(): TimerTask{
         }
         cache.writeText(firstRes.global.rank.rankScore) //将首次获取到的分数写入缓存文件
     }
-    val playerTask : TimerTask = object :TimerTask() { //定时任务
+    playerTask = object :TimerTask() { //定时任务
         override fun run() {
             listendPlayer.data.forEach { it_id -> //遍历玩家id
                 if (it_id.key == "0") return@forEach //跳过占位符
@@ -62,7 +72,7 @@ suspend fun playerStatListener(): TimerTask{
                         }
                     }
                     if(requestStr.first == 1){
-                        logger.error("本次对${it_id.key}监听错误，原因：${requestStr.second}")
+                        logger.error("本次对${it_id.key}监听错误，原因：${requestStr.second}，不用报告本次错误")
                         this.cancel()
                     }
                     val res = Gson().fromJson(requestStr.second, ApexResponsePlayer::class.java)
@@ -98,6 +108,6 @@ suspend fun playerStatListener(): TimerTask{
             }
         }
     }
-    Timer().schedule(playerTask, 0, Config.listenInterval.toLong() * 60 * 1000) //开始执行定时任务
-    return playerTask
+    playerTimer = Timer()
+    playerTimer!!.schedule(playerTask, 0, Config.listenInterval.toLong() * 60 * 1000) //开始执行定时任务
 }

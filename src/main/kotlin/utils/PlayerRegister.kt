@@ -17,7 +17,6 @@ import pers.shennoter.Config
 import pers.shennoter.RankLookUp
 import playerStat
 import java.io.File
-import kotlin.concurrent.thread
 
 //使用事件通道监听查询自己信息的事件，只有这样才能获取到sender的qq号
 fun playerRegister() {

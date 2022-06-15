@@ -11,39 +11,22 @@ import News
 import Player
 import Predator
 import Map
-import bean.Users
 import com.google.gson.Gson
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.console.command.*
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
-import net.mamoe.mirai.contact.Contact.Companion.sendImage
-import net.mamoe.mirai.event.GlobalEventChannel
-import net.mamoe.mirai.event.events.GroupMessageEvent
-import net.mamoe.mirai.event.nextEvent
-import net.mamoe.mirai.event.selectMessages
-import net.mamoe.mirai.event.whileSelectMessages
-import net.mamoe.mirai.message.data.*
-import net.mamoe.mirai.message.data.MessageSource.Key.quote
-import net.mamoe.mirai.message.nextMessage
-import net.mamoe.mirai.utils.ExternalResource.Companion.toExternalResource
-import net.mamoe.mirai.utils.ExternalResource.Companion.uploadAsImage
-import playerStat
 import utils.*
 import java.io.File
-import java.io.InputStream
-import java.util.Timer
-import java.util.TimerTask
 
-var mapTask: TimerTask? = null
-var playerTask: TimerTask? = null
+
+
 object RankLookUp : KotlinPlugin(
     JvmPluginDescription(
         id = "pers.shennoter.RankLookUp",
         name = "ApexLookUp",
-        version = "1.5.1",
+        version = "1.5.2",
     ){
         author("Shennoter")
     }
@@ -97,11 +80,11 @@ fun startListening(){
         GlobalScope.launch { //启动监听任务
             val listendPlayer : ListendPlayer = Gson().fromJson(File("${RankLookUp.dataFolder}/Data.json").readText(), ListendPlayer::class.java)
             if(Config.listener && listendPlayer.data.size > 1) {
-                playerTask = playerStatListener()
+                playerStatListener()
             }
             val groups : GroupReminding = Gson().fromJson(File("${RankLookUp.dataFolder}/Reminder.json").readText(), GroupReminding::class.java)
             if(Config.mapRotationReminder && groups.data.size > 1){
-                mapTask = mapReminder()
+                mapReminder()
             }
         }
     }

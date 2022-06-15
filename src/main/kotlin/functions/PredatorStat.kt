@@ -25,7 +25,7 @@ fun predatorStat(image: ApexImage):String?{
     if (requestStr.first == 1) { //如果还是不行就报错返回
         return requestStr.second
     }
-    val res = Gson().fromJson(requestStr.second, ApexResponsePredator::class.java)
+    val res = Gson().fromJson(requestStr.second, ApexResponsePredator::class.java)?: return "数据获取失败" //非null检查
     return if (Config.mode == "pic"){
         predatorPictureMode(res, image)
         "查询成功"
