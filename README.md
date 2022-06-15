@@ -24,6 +24,11 @@
 # Data Source
 [https://apexlegendsapi.com/](https://apexlegendsapi.com/)  
 **THX**
+## 如果你想自己编译......
+1. Clone源码
+2. 修改源码并保存
+3. 在项目根目录打开终端，输入`./gradlew buildPlugin`
+4. 等待编译完成后在`./build/mirai`里面拿编译完成的插件
 ## 食用前准备
 - 安装[chat-command插件](https://github.com/project-mirai/chat-command) 
 - 在[https://apexlegendsapi.com/](https://apexlegendsapi.com/)获取APIkey填入`config/pers.shennoter.ranklookup/config.yml`
@@ -53,7 +58,6 @@
 |`/<apexadd> <map>`|在该群订阅地图轮换（当有轮换时自动提醒）|
 |`/<apexrmv> <map>`|移除该群对地图轮换的订阅|
 |`/<apexcache>`|立即清除缓存（无视过期时间）| 
- 
 # 配置文件  
 `config/pers.shennoter.RankLookUp/config.yml`
 |配置名称|功能|缺省值|  
@@ -73,18 +77,23 @@
 |`proxyType`|代理类型：HTTP、SOCKS|HTTP|
 |`hostName`|代理地址|127.0.0.1|
 |`port`|代理端口|7890|
+## 可能出现的报错
+像图里这种BufferedImage、PictureMode、java.awt、graphic之类的字样的报错，一般都可以通过在mcl启动命令添加JVM参数  
+`-Djava.awt.headless=true`解决  
+比如linux的mirai目录有一个名字叫“mcl”的文件，用记事本打开后你会看到`$JAVA_BINARY -jar mcl.jar $*`，把它改成`$JAVA_BINARY -Djava.awt.headless=true -jar mcl.jar $*`，就可以解决这类报错了，windows同理
+![player](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/error.png)
 ## 示例  
 - 查询玩家  
-  ![player](https://github.com/Shennoter/ApexRankLookUp/blob/main/player.png)
+  ![player](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/player.png)
 - 查询地图轮换  
-  ![map](https://github.com/Shennoter/ApexRankLookUp/blob/main/map.png)
-- 查询复制器轮换  
-  ![craft](https://github.com/Shennoter/ApexRankLookUp/blob/main/craft.png)
+  ![map](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/map.png)
+- 查询复制器轮换   
+  ![craft](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/craft.png)
 - 查询猎杀门槛  
-  ![predator](https://github.com/Shennoter/ApexRankLookUp/blob/main/predatoreg.png)
+  ![predator](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/predatoreg.png)
 - 查询官方活动新闻  
-  ![news](https://github.com/Shennoter/ApexRankLookUp/blob/main/news.png)
+  ![news](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/news.png)
 - 订阅玩家分数  
-  ![playerListener](https://github.com/Shennoter/ApexRankLookUp/blob/main/playerListener.png)
+  ![playerListener](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/playerListener.png)
 - 订阅地图轮换  
-  ![mapReminder](https://github.com/Shennoter/ApexRankLookUp/blob/main/mapReminder.png)
+  ![mapReminder](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/mapReminder.png)
