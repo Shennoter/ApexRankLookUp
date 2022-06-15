@@ -21,7 +21,7 @@
 > 以及
 > - 订阅玩家分数
 > - 订阅地图轮换
-# Data Source
+## Data Source
 [https://apexlegendsapi.com/](https://apexlegendsapi.com/)  
 **THX**
 ## 如果你想自己编译......
@@ -58,7 +58,7 @@
 |`/<apexadd> <map>`|在该群订阅地图轮换（当有轮换时自动提醒）|
 |`/<apexrmv> <map>`|移除该群对地图轮换的订阅|
 |`/<apexcache>`|立即清除缓存（无视过期时间）| 
-# 配置文件  
+## 配置文件  
 `config/pers.shennoter.RankLookUp/config.yml`
 |配置名称|功能|缺省值|  
 |:---|:---|:---|
