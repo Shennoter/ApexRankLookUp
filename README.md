@@ -85,15 +85,21 @@
 ## 示例  
 - 查询玩家  
   ![player](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/player.png)
+---
 - 查询地图轮换  
   ![map](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/map.png)
+---
 - 查询复制器轮换   
   ![craft](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/craft.png)
+---
 - 查询猎杀门槛  
   ![predator](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/predatoreg.png)
+---
 - 查询官方活动新闻  
   ![news](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/news.png)
+---
 - 订阅玩家分数  
   ![playerListener](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/playerListener.png)
+---
 - 订阅地图轮换  
   ![mapReminder](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/mapReminder.png)
