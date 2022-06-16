@@ -47,7 +47,7 @@
 |`/<apexbd> <Origin ID]`|绑定一个ID|  
 |`/<apexubd> [Origin ID]`|解绑一个ID|  
 |`/<apexmap>`|查询当前地图轮换|
-|`/<apexid> [Origin ID] [平台]`|查询某玩家（空格需用@@填充）（平台: PC、X1、PS4、SWITCH，不填为默认配置）|  
+|`/<apexid> [Origin ID] [平台]`|查询玩家(空格用@@填充)，平台: PC、X1、PS4、SWITCH，不填为默认配置|  
 |`/<apexcraft>` | 查询复制器轮换|
 |`/<apexpred>` | 查询猎杀底分|
 |`/<apexnews> [index]` | 查询官方新闻，index为文章序号|
