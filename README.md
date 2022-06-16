@@ -64,21 +64,21 @@
 |:---|:---|:---|
 |`apiKey`|apiKey：如果没有请到 https://apexlegendsapi.com/ 获取|空|
 |`extendApiKey`|额外apiKey，用于防止api过热，可不填|空|
-|`platform`|默认平台：PC, X1, PS4, SWITCH（X1为XBOX）|PC|
-|`mode`|回复方式： `pic`为图片，`text`为文字（制造器和新闻除外）|pic|  
-|`picType` | 图片质量：`PNG`原图，更清晰；`JPG`更小，发送更快|JPG|
-|`cacheExpireTime` | 缓存图片过期时间（单位：天）|30|
-|`cacheAutoDel` | 是否自动清除过期缓存：`true`为是，`false`为否（开启mcl时自动清理）|true|
-|`listener`|玩家分数监听：true为启用，false为关闭|false|
-|`listenerInfoType`|玩家监听提醒方式：true为分数变化+玩家信息，false为仅提醒分数变化|true|
-|`listenInterval`|监听时间间隔（单位：分钟）|10|
-|`mapRotationReminder`|地图轮换提醒：true为启用，false为关闭|false|
-|`maptoReminder`|提醒地图：“诸王峡谷”“风暴点”“世界边缘”“奥林匹斯”，true为开启，false为关闭|略|
-|`font`|字体|微软雅黑|
-|`ifProxy`|是否使用代理：true为启用，false为关闭|false|
-|`proxyType`|代理类型：HTTP、SOCKS|HTTP|
-|`hostName`|代理地址|127.0.0.1|
-|`port`|代理端口|7890|
+|`platform`|默认平台：`PC`, `X1`, `PS4`, `SWITCH`（X1为XBOX）|`PC`|
+|`mode`|回复方式： `pic`为图片，`text`为文字（制造器和新闻除外）|`pic`|  
+|`picType` | 图片质量：`PNG`原图，更清晰；`JPG`更小，发送更快|`JPG`|
+|`cacheExpireTime` | 缓存图片过期时间（单位：天）|`30`|
+|`cacheAutoDel` | 是否自动清除过期缓存：`true`为是，`false`为否（开启mcl时自动清理）|`true`|
+|`listener`|玩家分数监听：`true`为启用，`false`为关闭|`false`|
+|`listenerInfoType`|玩家监听提醒方式：`true`为分数变化+玩家信息，`false`为仅提醒分数变化|`true`|
+|`listenInterval`|监听时间间隔（单位：分钟）|`10`|
+|`mapRotationReminder`|地图轮换提醒：`true`为启用，`false`为关闭|`false`|
+|`maptoReminder`|提醒地图：“诸王峡谷”“风暴点”“世界边缘”“奥林匹斯”，`true`为开启，`false`为关闭|略|
+|`font`|字体|`微软雅黑`|
+|`ifProxy`|是否使用代理：`true`为启用，`false`为关闭|`false`|
+|`proxyType`|代理类型：`HTTP`、`SOCKS`|`HTTP`|
+|`hostName`|代理地址|`127.0.0.1`|
+|`port`|代理端口|`7890`|
 ## 可能出现的报错
 像图里这种BufferedImage、PictureMode、java.awt、graphic之类的字样的报错，一般都可以通过在mcl启动命令添加JVM参数  
 `-Djava.awt.headless=true`解决  
