@@ -14,9 +14,9 @@ object Player : SimpleCommand(
     description = "查询玩家信息"
 ) {
     @Handler
-    suspend fun CommandSender.apexPlayerInfo(id: String) {
+    suspend fun CommandSender.apexPlayerInfo(id: String, platform:String = Config.platform) {
         val image = ApexImage()
-        val code = playerStat(id,image)
+        val code = playerStat(id, image, platform)
         when(Config.mode){
             "pic"-> {
                 if (code == "查询成功") {
@@ -209,6 +209,17 @@ object Listener : CompositeCommand(
                         res = getRes(url)
                         if (res.first == 0) return@breaking
                     }
+                }
+            }
+        }
+        if (res.first == 1) { // 检查其他平台
+            run breaking@{
+                listOf("PC", "X1", "PS4", "SWITCH").forEach { platform ->
+                    Thread.sleep(2000)
+                    url =
+                        "https://api.mozambiquehe.re/bridge?version=5&platform=${platform}&player=${id}&auth=${Config.apiKey}"
+                    res = getRes(url)
+                    if (res.first == 0) return@breaking
                 }
             }
         }

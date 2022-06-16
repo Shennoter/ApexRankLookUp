@@ -37,7 +37,7 @@ fun mapReminder(){
         }
     }
     if(requestStr.first == 1) {
-        RankLookUp.logger.error("本次地图轮换监听错误，原因：${requestStr.second}，不用报告本次错误")
+        RankLookUp.logger.error("本次地图轮换监听错误，原因：${requestStr.second}，不用反馈本次错误")
     }
     var res = Gson().fromJson(requestStr.second, ApexResponseMap::class.java)
     val cache = File("${RankLookUp.dataFolder}/map.time")
@@ -74,7 +74,7 @@ fun mapReminder(){
                 val timeToRemind = (endTime - currentTime) * 1000 + 5000 //算出下次轮换还要多久，再加上五秒防止api没及时更新
                 if ((endTime != storedEndTime) || firstStart) { //若未启动提醒计时则加入计时；如果是第一次启动则忽略一次判断条件，直接开始计时
                     cache.writeText(endTime.toString())
-                    if(Config.mapToRemind[res.battle_royale.current.map] == true) { //如果地图在提醒列表中则开启协程计时
+                    if(Config.mapToRemind[res.battle_royale.next.map] == true) { //如果地图在提醒列表中则开启协程计时
                     GlobalScope.launch {
                         delay(timeToRemind)//计时到轮换时间进行提醒
                         res = Gson().fromJson(getRes(url).second, ApexResponseMap::class.java)

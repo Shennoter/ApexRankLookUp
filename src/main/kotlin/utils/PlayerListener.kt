@@ -31,13 +31,13 @@ suspend fun playerStatListener(){
     listendPlayer.data.forEach { //遍历玩家id创建分数缓存
         if (it.key == "0") return@forEach //跳过占位符
         delay(2000) //延迟2秒防止api过热
-        var url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=${it.key}&auth=${Config.apiKey}"
+        var url = "https://api.mozambiquehe.re/bridge?version=5&platform=${Config.platform}&player=${it.key}&auth=${Config.apiKey}"
         var requestStr = getRes(url)
         if (requestStr.first == 1) {
             if(Config.extendApiKey.isNotEmpty()){ //如果api过热且config有额外apikey，则使用额外apikey重试
                 run breaking@{
                     Config.extendApiKey.forEach { ex_api ->
-                        url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=${it.key}&auth=$ex_api"
+                        url = "https://api.mozambiquehe.re/bridge?version=5&platform=${Config.platform}&player=${it.key}&auth=$ex_api"
                         requestStr = getRes(url)
                         if (requestStr.first == 0) return@breaking
                     }
@@ -57,17 +57,28 @@ suspend fun playerStatListener(){
                 if (it_id.key == "0") return@forEach //跳过占位符
                 Thread.sleep(2000) //延迟2秒防止api过热
                 GlobalScope.launch { //每个id开一个协程
-                    var url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=${it_id.key}&auth=${Config.apiKey}"
+                    var url = "https://api.mozambiquehe.re/bridge?version=5&platform=${Config.platform}&player=${it_id.key}&auth=${Config.apiKey}"
                     val cache = File("$dataFolder/score/listened_${it_id.key}.score")
                     var requestStr = getRes(url)
                     if (requestStr.first == 1) {
                         if(Config.extendApiKey.isNotEmpty()){ //如果api过热且config有额外apikey，则使用额外apikey重试
                             run breaking@{
                                 Config.extendApiKey.forEach { ex_api ->
-                                    url = "https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=${it_id.key}&auth=$ex_api"
+                                    url = "https://api.mozambiquehe.re/bridge?version=5&platform=${Config.platform}&player=${it_id.key}&auth=$ex_api"
                                     requestStr = getRes(url)
                                     if (requestStr.first == 0) return@breaking
                                 }
+                            }
+                        }
+                    }
+                    if (requestStr.first == 1) { // 检查其他平台
+                        run breaking@{
+                            listOf("PC", "X1", "PS4", "SWITCH").forEach { platform ->
+                                Thread.sleep(2000)
+                                url =
+                                    "https://api.mozambiquehe.re/bridge?version=5&platform=${platform}&player=${it_id.key}&auth=${Config.apiKey}"
+                                requestStr = getRes(url)
+                                if (requestStr.first == 0) return@breaking
                             }
                         }
                     }

@@ -9,6 +9,8 @@ object Config : AutoSavePluginConfig("config") {
     val apiKey: String by value()
     @ValueDescription("额外apiKey：不同apiKey用英文逗号隔开,apiKey用英文单引号包裹，可不填")
     val extendApiKey: List<String> by value()
+    @ValueDescription("默认平台：PC, X1, PS4, SWITCH（X1为XBOX）")
+    val platform: String by value("PC")
     @ValueDescription("回复模式: pic为图片，text为文字(适用于玩家信息、地图轮换和猎杀门槛)")
     var mode: String by value("pic")
     @ValueDescription("图片质量: PNG原图，JPG更小")

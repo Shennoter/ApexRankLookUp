@@ -1,5 +1,6 @@
 package utils
 
+
 import bean.Users
 import com.google.gson.Gson
 import kotlinx.coroutines.GlobalScope
@@ -29,18 +30,38 @@ fun playerRegister() {
                 users.data[qid]?.forEach {
                     Thread.sleep(2000)
                     val image = ApexImage()
-                    val code = playerStat(it, image)
+                    var code = playerStat(it, image, Config.platform)
                     when (Config.mode) {
                         "pic" -> {
                             if (code == "查询成功") {
                                 subject.sendMessage(messageChainOf(At(qid), image.get().uploadAsImage(subject)))
                                 RankLookUp.logger.info(code)
-                            } else {
-                                RankLookUp.logger.error(code)
-                                subject.sendMessage(code!!)
+                            } else { //查询错误则尝试其他平台
+                                var unfound = true
+                                listOf("PC","X1","PS4","SWITCH").forEach{ platform ->
+                                    Thread.sleep(2000)
+                                    code = playerStat(it, image, platform)
+                                    when (Config.mode) {
+                                        "pic" -> {
+                                            if (code == "查询成功") {
+                                                subject.sendMessage(messageChainOf(At(qid), image.get().uploadAsImage(subject)))
+                                                RankLookUp.logger.info(code)
+                                                unfound = false
+                                            }
+                                        }
+                                        "text" -> {
+                                            subject.sendMessage(messageChainOf(At(qid), PlainText(code!!)))
+                                        }
+                                        else -> subject.sendMessage("config.yml回复模式配置错误，请检查")
+                                    }
+                                }
+                                if(unfound){
+                                    RankLookUp.logger.error(code)
+                                    subject.sendMessage(code!!)
+                                }
                             }
                         }
-                        "text" -> {
+                        "text" -> {  // 要分辨太麻烦，懒得写文字模式的多平台尝试了
                             subject.sendMessage(messageChainOf(At(qid), PlainText(code!!)))
                         }
                         else -> subject.sendMessage("config.yml回复模式配置错误，请检查")
@@ -62,6 +83,17 @@ fun playerRegister() {
                                 res = getRes(url)
                                 if (res.first == 0) return@breaking
                             }
+                        }
+                    }
+                }
+                if (res.first == 1) { // 检查其他平台
+                    run breaking@{
+                        listOf("PC", "X1", "PS4", "SWITCH").forEach { platform ->
+                            Thread.sleep(2000)
+                            url =
+                                "https://api.mozambiquehe.re/bridge?version=5&platform=${platform}&player=${id}&auth=${Config.apiKey}"
+                            res = getRes(url)
+                            if (res.first == 0) return@breaking
                         }
                     }
                 }
@@ -101,6 +133,17 @@ fun playerBonder() {
                                 res = getRes(url)
                                 if (res.first == 0) return@breaking
                             }
+                        }
+                    }
+                }
+                if (res.first == 1) { // 检查其他平台
+                    run breaking@{
+                        listOf("PC", "X1", "PS4", "SWITCH").forEach { platform ->
+                            Thread.sleep(2000)
+                            url =
+                                "https://api.mozambiquehe.re/bridge?version=5&platform=${platform}&player=${id}&auth=${Config.apiKey}"
+                            res = getRes(url)
+                            if (res.first == 0) return@breaking
                         }
                     }
                 }
