@@ -44,10 +44,10 @@
 |:---|:---|  
 |`/<apexhelp>`|帮助|
 |`/<apex>`|查询已绑定ID|  
-|`/<apexbd> [Origin ID]`|绑定一个ID|  
+|`/<apexbd> <Origin ID]`|绑定一个ID|  
 |`/<apexubd> [Origin ID]`|解绑一个ID|  
 |`/<apexmap>`|查询当前地图轮换|
-|`/<apexid> [Origin ID]`|查询某玩家（空格需用@@填充）|  
+|`/<apexid> [Origin ID] [平台]`|查询某玩家（空格需用@@填充）（平台: PC、X1、PS4、SWITCH，不填为默认配置）|  
 |`/<apexcraft>` | 查询复制器轮换|
 |`/<apexpred>` | 查询猎杀底分|
 |`/<apexnews> [index]` | 查询官方新闻，index为文章序号|
@@ -64,6 +64,7 @@
 |:---|:---|:---|
 |`apiKey`|apiKey：如果没有请到 https://apexlegendsapi.com/ 获取|空|
 |`extendApiKey`|额外apiKey，用于防止api过热，可不填|空|
+|`platform`|默认平台：PC, X1, PS4, SWITCH（X1为XBOX）|PC|
 |`mode`|回复方式： `pic`为图片，`text`为文字（制造器和新闻除外）|pic|  
 |`picType` | 图片质量：`PNG`原图，更清晰；`JPG`更小，发送更快|JPG|
 |`cacheExpireTime` | 缓存图片过期时间（单位：天）|30|
@@ -72,6 +73,7 @@
 |`listenerInfoType`|玩家监听提醒方式：true为分数变化+玩家信息，false为仅提醒分数变化|true|
 |`listenInterval`|监听时间间隔（单位：分钟）|10|
 |`mapRotationReminder`|地图轮换提醒：true为启用，false为关闭|false|
+|`maptoReminder`|提醒地图：“诸王峡谷”“风暴点”“世界边缘”“奥林匹斯”，true为开启，false为关闭|略|
 |`font`|字体|微软雅黑|
 |`ifProxy`|是否使用代理：true为启用，false为关闭|false|
 |`proxyType`|代理类型：HTTP、SOCKS|HTTP|
