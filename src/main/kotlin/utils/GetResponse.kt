@@ -28,7 +28,7 @@ fun getRes(url: String):Pair<Int,String?>{
     }
     catch (e:Exception){
         e.printStackTrace()
-        return Pair(1, "网络请求发起错误")
+        return Pair(1, "网络请求发起错误:${e.message}")
     }
     val body = response.body?.string()
     response.close()
