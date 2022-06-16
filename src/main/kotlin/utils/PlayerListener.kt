@@ -44,6 +44,17 @@ suspend fun playerStatListener(){
                 }
             }
         }
+        if (requestStr.first == 1) { // 检查其他平台
+            run breaking@{
+                listOf("PC", "X1", "PS4", "SWITCH").forEach { platform ->
+                    Thread.sleep(2000)
+                    url =
+                        "https://api.mozambiquehe.re/bridge?version=5&platform=${platform}&player=${it.key}&auth=${Config.apiKey}"
+                    requestStr = getRes(url)
+                    if (requestStr.first == 0) return@breaking
+                }
+            }
+        }
         val firstRes = Gson().fromJson(requestStr.second, ApexResponsePlayer::class.java)
         val cache = File("$dataFolder/score/listened_${it.key}.score") //缓存文件，保存玩家分数
         if (!cache.exists()) {
