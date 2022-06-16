@@ -10,7 +10,7 @@ import utils.getRes
 import java.io.File
 
 object Player : SimpleCommand(
-    RankLookUp, "apexid","玩家查询" ,
+    RankLookUp, "apexid",
     description = "查询玩家信息"
 ) {
     @Handler
@@ -40,7 +40,7 @@ object Player : SimpleCommand(
 }
 
 object Map : SimpleCommand(
-    RankLookUp, "apexmap","地图查询" ,
+    RankLookUp, "apexmap",
     description = "查询地图轮换"
 ){
     @Handler
@@ -70,7 +70,7 @@ object Map : SimpleCommand(
 }
 
 object Craft : SimpleCommand(
-    RankLookUp, "apexcraft","复制器查询" ,
+    RankLookUp, "apexcraft",
     description = "查询复制器轮换"
 ){
     @Handler
@@ -93,7 +93,7 @@ object Craft : SimpleCommand(
 }
 
 object Predator : SimpleCommand(
-    RankLookUp, "apexpred","猎杀查询" ,
+    RankLookUp, "apexpred",
     description = "查询最低猎杀信息"
 ) {
     @Handler
@@ -123,7 +123,7 @@ object Predator : SimpleCommand(
 }
 
 object News : SimpleCommand(
-    RankLookUp, "apexnews","新闻查询" ,
+    RankLookUp, "apexnews",
     description = "查询官方新闻活动"
 ) {
     @Handler
@@ -147,7 +147,7 @@ object News : SimpleCommand(
 }
 
 object Cache : SimpleCommand(
-    RankLookUp, "apexcache","清除缓存" ,
+    RankLookUp, "apexcache",
     description = "清除产生的缓存文件，解决可能出现的缓存问题"
 ) {
     @Handler
@@ -158,7 +158,7 @@ object Cache : SimpleCommand(
     }
 }
 object Help : SimpleCommand(
-    RankLookUp, "apexhelp","查看帮助" ,
+    RankLookUp, "apexhelp",
     description = "查看本插件所有指令"
 ) {
     @Handler
@@ -184,7 +184,7 @@ object Help : SimpleCommand(
 }
 
 object LeaderBoard : SimpleCommand(
-    RankLookUp, "apexldb","查看排行榜" ,
+    RankLookUp, "apexldb",
     description = "查看排行榜"
 ) {
     @Handler

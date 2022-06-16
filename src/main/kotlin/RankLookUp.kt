@@ -12,6 +12,7 @@ import Player
 import Predator
 import Map
 import com.google.gson.Gson
+import config.CustomComm
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.console.command.*
@@ -34,6 +35,7 @@ object RankLookUp : KotlinPlugin(
     override fun onEnable() {
         logger.info("Apex查询插件已启动")
         Config.reload()
+        CustomComm.reload()
         CommandManager.registerCommand(Player)
         CommandManager.registerCommand(Map)
         CommandManager.registerCommand(Craft)
@@ -58,6 +60,7 @@ object RankLookUp : KotlinPlugin(
 
     override fun onDisable(){
         Config.save()
+        CustomComm.save()
         CommandManager.unregisterCommand(Player)
         CommandManager.unregisterCommand(Map)
         CommandManager.unregisterCommand(Craft)

@@ -3,6 +3,7 @@ package utils
 
 import bean.Users
 import com.google.gson.Gson
+import config.CustomComm
 import kotlinx.coroutines.GlobalScope
 import net.mamoe.mirai.event.GlobalEventChannel
 import net.mamoe.mirai.event.events.GroupMessageEvent
@@ -22,7 +23,7 @@ import java.io.File
 //使用事件通道监听查询自己信息的事件，只有这样才能获取到sender的qq号
 fun playerRegister() {
     GlobalEventChannel.parentScope(GlobalScope).subscribeAlways<GroupMessageEvent> { event ->
-        if (event.message.content == "/apex") {
+        if (event.message.content == "/apex" || event.message.content == CustomComm.apex) {
             val gson = Gson()
             val users = gson.fromJson(File("${RankLookUp.dataFolder}/Users.json").readText(), Users::class.java)
             val qid = sender.id
@@ -113,8 +114,8 @@ fun playerRegister() {
 
 fun playerBonder() {
     GlobalEventChannel.parentScope(GlobalScope).subscribeAlways<GroupMessageEvent> { event ->
-        if (event.message.content.contains("/apexbd")) {
-            var id = event.message.content.substringAfter(" ")
+        if (event.message.content.contains("/apexbd") || event.message.content.contains(CustomComm.apexbd)) {
+            val id = event.message.content.substringAfter(" ")
             val gson = Gson()
             val users = gson.fromJson(File("${RankLookUp.dataFolder}/Users.json").readText(), Users::class.java)
             val qid = sender.id
@@ -163,8 +164,8 @@ fun playerBonder() {
 
 fun playerUnbonder(){
     GlobalEventChannel.parentScope(GlobalScope).subscribeAlways<GroupMessageEvent> { event ->
-        if (event.message.content.contains("/apexubd")) {
-            var id = event.message.content.substringAfter(" ")
+        if (event.message.content.contains("/apexubd") || event.message.content.contains(CustomComm.apexubd)) {
+            val id = event.message.content.substringAfter(" ")
             val gson = Gson()
             val users = gson.fromJson(File("${RankLookUp.dataFolder}/Users.json").readText(), Users::class.java)
             val qid = sender.id
