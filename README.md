@@ -28,7 +28,14 @@
 1. Clone源码
 2. 修改源码并保存
 3. 在项目根目录打开终端，输入`./gradlew buildPlugin`
-4. 等待编译完成后在`./build/mirai`里面拿编译完成的插件
+4. 等待编译完成后在`./build/mirai`里面拿编译完成的插件  
+比如自定义指令：
+```kotlin
+object Player : SimpleCommand(
+    RankLookUp, "apexid", "这里填写你想自定义的指令名"
+    description = "查询玩家信息"
+)
+```
 ## 食用前准备
 - 安装[chat-command插件](https://github.com/project-mirai/chat-command) 
 - 在[https://apexlegendsapi.com/](https://apexlegendsapi.com/)获取APIkey填入`config/pers.shennoter.ranklookup/config.yml`
