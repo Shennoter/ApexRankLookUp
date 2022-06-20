@@ -47,7 +47,7 @@ object Player : SimpleCommand(
 - 如给予所有对象关于此插件的所有权限，请输入`/permission add * pers.shennoter.ranklookup:*`  
 - **订阅功能仅对QQ群有效，对私聊无效**  
 
-|指令|功能|  
+|指令(`<>`必填项，`[]`选填项)|功能|  
 |:---|:---|  
 |`/apexhelp`|帮助|
 |`/apex`|查询已绑定ID|  
