@@ -51,16 +51,16 @@ object Player : SimpleCommand(
 |:---|:---|  
 |`/apexhelp`|帮助|
 |`/apex`|查询已绑定ID|  
-|`/apexbd [Origin ID]`|绑定一个ID|  
-|`/apexubd [Origin ID]`|解绑一个ID|  
+|`/apexbd <Origin ID>`|绑定一个ID|  
+|`/apexubd <Origin ID>`|解绑一个ID|  
 |`/apexmap`|查询当前地图轮换|
-|`/apexid [Origin ID] [平台]`|查询玩家(空格用@@填充)，平台: PC、X1、PS4、SWITCH，不填为默认配置|  
+|`/apexid <Origin ID> [平台]`|查询玩家(空格用@@填充)，平台: PC、X1、PS4、SWITCH，不填为默认配置|  
 |`/apexcraft` | 查询复制器轮换|
 |`/apexpred` | 查询猎杀底分|
-|`/apexnews [index]` | 查询官方新闻，index为文章序号|
+|`/apexnews <index>` | 查询官方新闻，index为文章序号|
 |`/apexldb`|查询排行榜（发一个排行榜链接，以后再更新）|
-|`/apexadd <id> [Origin ID] `|在该群订阅某玩家分数（当有更新时自动提醒）|
-|`/apexrmv <id> [Origin ID]`|移除该群对某玩家分数的订阅|
+|`/apexadd <id> <Origin ID> `|在该群订阅某玩家分数（当有更新时自动提醒）|
+|`/apexrmv <id> <Origin ID>`|移除该群对某玩家分数的订阅|
 |`/apexadd <info>`|查看该群已订阅的ID|  
 |`/apexadd <map>`|在该群订阅地图轮换（当有轮换时自动提醒）|
 |`/apexrmv <map>`|移除该群对地图轮换的订阅|
