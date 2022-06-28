@@ -91,6 +91,8 @@ object Player : SimpleCommand(
 `-Djava.awt.headless=true`解决  
 比如linux的mirai目录有一个名字叫“mcl”的文件，用记事本打开后你会看到`$JAVA_BINARY -jar mcl.jar $*`，把它改成`$JAVA_BINARY -Djava.awt.headless=true -jar mcl.jar $*`，就可以解决这类报错了，windows同理
 ![player](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/error.png)
+## Todo
+- [ ] 解决地图监听和玩家监听线程无法正常关闭的问题（由于能力问题，可能长期搁置）
 ## 示例  
 - 查询玩家  
   ![player](https://github.com/Shennoter/ApexRankLookUp/blob/main/picture/player.png)
