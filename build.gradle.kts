@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "pers.shennoter"
-version = "1.5.3"
+version = "1.5.4"
 
 repositories {
     maven("https://maven.aliyun.com/repository/public")
