@@ -55,7 +55,12 @@ suspend fun playerStatListener(){
                 }
             }
         }
-        val firstRes = Gson().fromJson(requestStr.second, ApexResponsePlayer::class.java)
+        val firstRes = try {
+            Gson().fromJson(requestStr.second, ApexResponsePlayer::class.java)
+        }catch (e:Exception){
+            RankLookUp.logger.error("数据获取失败:${e.message}") //非null检查
+            return@forEach
+        }
         val cache = File("$dataFolder/score/listened_${it.key}.score") //缓存文件，保存玩家分数
         if (!cache.exists()) {
             cache.createNewFile()

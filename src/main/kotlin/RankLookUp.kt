@@ -27,7 +27,7 @@ object RankLookUp : KotlinPlugin(
     JvmPluginDescription(
         id = "pers.shennoter.RankLookUp",
         name = "ApexLookUp",
-        version = "1.5.3",
+        version = "1.5.4",
     ){
         author("Shennoter")
     }
