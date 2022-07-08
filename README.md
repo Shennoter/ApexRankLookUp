@@ -68,7 +68,7 @@ object Player : SimpleCommand(
 | `/apexrmv <map>`             | 移除该群对地图轮换的订阅                               |
 | `/apexcache`                 | 立即清除缓存（无视过期时间）                             | 
 ## 配置文件  
-`config/pers.shennoter.RankLookUp/config.yml`
+`config/pers.shennoter.apexlookup/config.yml`
 |配置名称|功能|缺省值|  
 |:---|:---|:---|
 |`apiKey`|apiKey：如果没有请到 https://apexlegendsapi.com/ 获取|空|
