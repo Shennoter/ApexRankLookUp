@@ -51,7 +51,7 @@ object Player : SimpleCommand(
 |:-----------------------------|:-------------------------------------------|  
 | `/apexhelp`                  | 帮助                                         |
 | `/apex`                      | 查询绑定ID的信息                                  |  
-| `/apexreg `       | 查询已绑定ID列表                                  |  
+| `/apexreg `                  | 查询已绑定ID列表                                  |  
 | `/apexbd <Origin ID>`        | 绑定一个ID                                     |  
 | `/apexubd <Origin ID>`       | 解绑一个ID                                     |  
 | `/apexubd all`               | 解绑所有ID                                     |  
