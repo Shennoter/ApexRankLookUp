@@ -61,11 +61,11 @@ object Player : SimpleCommand(
 | `/apexpred`                  | 查询猎杀底分                                     |
 | `/apexnews <index>`          | 查询官方新闻，index为文章序号                          |
 | `/apexldb`                   | 查询排行榜（发一个排行榜链接，以后再更新）                      |
-| `/apexadd <id> <Origin ID> ` | 在该群订阅某玩家分数（当有更新时自动提醒）                      |
-| `/apexrmv <id> <Origin ID>`  | 移除该群对某玩家分数的订阅                              |
-| `/apexadd <info>`            | 查看该群已订阅的ID                                 |  
-| `/apexadd <map>`             | 在该群订阅地图轮换（当有轮换时自动提醒）                       |
-| `/apexrmv <map>`             | 移除该群对地图轮换的订阅                               |
+| `/apexadd id <Origin ID> ` | 在该群订阅某玩家分数（当有更新时自动提醒）                      |
+| `/apexrmv id <Origin ID>`  | 移除该群对某玩家分数的订阅                              |
+| `/apexadd info`            | 查看该群已订阅的ID                                 |  
+| `/apexadd map`             | 在该群订阅地图轮换（当有轮换时自动提醒）                       |
+| `/apexrmv map`             | 移除该群对地图轮换的订阅                               |
 | `/apexcache`                 | 立即清除缓存（无视过期时间）                             | 
 ## 配置文件  
 `config/pers.shennoter.apexlookup/config.yml`
