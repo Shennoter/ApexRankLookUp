@@ -38,13 +38,13 @@ object Player : SimpleCommand(
 ```
 ## 食用前准备
 - 安装[chat-command插件](https://github.com/project-mirai/chat-command) 
-- 在[https://apexlegendsapi.com/](https://apexlegendsapi.com/)获取APIkey填入`config/pers.shennoter.ranklookup/config.yml`
+- 在[https://apexlegendsapi.com/](https://apexlegendsapi.com/)获取APIkey填入`config/pers.shennoter.apexlookup/config.yml`
 - 安装字体“**微软雅黑**”，否则可能发生错误，也可在config.yml更改为自己想要的字体
 ## 指令
-- 本插件权限ID为 `pers.shennoter.ranklookup:*`     
+- 本插件权限ID为 `pers.shennoter.apexlookup:*`     
 - 详见用户手册[PermissionCommand](https://github.com/mamoe/mirai/blob/dev/mirai-console/docs/BuiltInCommands.md#permissioncommand)  
-- 如果输了命令没反应请在控制台输入`/permission add <想要给予权限的对象> pers.shennoter.ranklookup:<想要开启的指令>`  
-- 如给予所有对象关于此插件的所有权限，请输入`/permission add * pers.shennoter.ranklookup:*`  
+- 如果输了命令没反应请在控制台输入`/permission add <想要给予权限的对象> pers.shennoter.apexlookup:<想要开启的指令>`  
+- 如给予所有对象关于此插件的所有权限，请输入`/permission add * pers.shennoter.apexlookup:*`  
 - **订阅功能仅对QQ群有效，对私聊无效**  
 
 | 指令(`<>`必填项，`[]`选填项)          | 功能                                         |  
