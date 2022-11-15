@@ -1,4 +1,4 @@
-package pers.shennoter
+package bean
 
 data class ApexResponseMap(
     val arenas: Arenas,

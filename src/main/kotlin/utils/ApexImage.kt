@@ -1,6 +1,7 @@
-package pers.shennoter
+package utils
 
-import pers.shennoter.ApexLookUp.dataFolder
+import ApexLookUp.dataFolder
+import config.Config
 import java.awt.*
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream

@@ -1,3 +1,5 @@
+package bean
+
 class ApexResponseNews : ArrayList<ApexResponseNewsItem>()
 
 data class ApexResponseNewsItem(

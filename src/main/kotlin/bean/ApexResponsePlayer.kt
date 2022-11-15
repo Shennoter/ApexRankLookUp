@@ -1,3 +1,5 @@
+package bean
+
 data class ApexResponsePlayer(
     val ALS: ALS,
     val global: Global,

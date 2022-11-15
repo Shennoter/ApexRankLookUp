@@ -1,3 +1,5 @@
+package bean
+
 data class ApexResponsePredator(
     val AP: AP,
     val RP: RP

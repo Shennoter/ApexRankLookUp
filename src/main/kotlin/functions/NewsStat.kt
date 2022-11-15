@@ -1,9 +1,15 @@
+package functions
+
+
+import bean.ApexResponseNews
 import com.google.gson.Gson
-import pers.shennoter.*
+import config.Config
+import utils.ApexImage
+import utils.ImageCache
 import utils.getRes
 import java.awt.image.BufferedImage
 
-fun newsStat(image: ApexImage,index:Int):String?{
+fun newsStat(image: ApexImage, index:Int):String?{
     if(Config.apiKey == "") {
         return "未填写ApiKey"
     }

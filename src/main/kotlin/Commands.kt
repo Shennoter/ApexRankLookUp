@@ -3,10 +3,13 @@ import net.mamoe.mirai.console.command.CommandSender
 import net.mamoe.mirai.console.command.CompositeCommand
 import net.mamoe.mirai.console.command.SimpleCommand
 import net.mamoe.mirai.contact.Contact.Companion.sendImage
-import pers.shennoter.*
-import pers.shennoter.ApexLookUp.dataFolder
-import pers.shennoter.ApexLookUp.logger
-import utils.getRes
+import ApexLookUp.dataFolder
+import ApexLookUp.logger
+import bean.GroupReminding
+import bean.ListendPlayer
+import config.Config
+import functions.*
+import utils.*
 import java.io.File
 
 object Player : SimpleCommand(

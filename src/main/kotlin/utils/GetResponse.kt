@@ -2,7 +2,7 @@ package utils
 
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import pers.shennoter.Config
+import config.Config
 import java.net.InetSocketAddress
 
 fun getRes(url: String):Pair<Int,String?>{

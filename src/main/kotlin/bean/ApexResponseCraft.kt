@@ -1,3 +1,5 @@
+package bean
+
 class ApexResponseCraft : ArrayList<ApexResponseCraftItem>()
 
 data class ApexResponseCraftItem(

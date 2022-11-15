@@ -14,10 +14,9 @@ import net.mamoe.mirai.message.data.PlainText
 import net.mamoe.mirai.message.data.content
 import net.mamoe.mirai.message.data.messageChainOf
 import net.mamoe.mirai.utils.ExternalResource.Companion.uploadAsImage
-import pers.shennoter.ApexImage
-import pers.shennoter.Config
-import pers.shennoter.ApexLookUp
-import playerStat
+import config.Config
+import ApexLookUp
+import functions.playerStat
 import java.io.File
 
 //使用事件通道监听查询自己信息的事件，只有这样才能获取到sender的qq号
@@ -84,7 +83,7 @@ fun playerBonder() {
         if(event.message.content.matches(pattern) || event.message.content.matches(patternCustom)) { // 判断是否为指令
             val idPattern = "(?<=/apexbd )[_a-zA-Z0-9\u4e00-\u9fa5 ]+".toRegex()
             val idPatternCustom = "(?<=${CustomComm.apexbd})[_a-zA-Z0-9\u4e00-\u9fa5 ]+".toRegex()
-            val finalPattern = "[_a-zA-Z0-9 ]+".toRegex()
+            val finalPattern = "[-_a-zA-Z0-9 ]+".toRegex()
             var found = idPattern.find(event.message.content) // 获取指令后内容
             if (found == null) {
                 found = idPatternCustom.find(event.message.content)
