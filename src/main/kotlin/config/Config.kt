@@ -27,7 +27,7 @@ object Config : AutoSavePluginConfig("config") {
     var listenInterval: Int by value(10)
     @ValueDescription("地图轮换提醒：true为启用，false为关闭")
     var mapRotationReminder: Boolean by value(false)
-    @ValueDescription("提醒地图：“诸王峡谷”“风暴点”“世界边缘”“奥林匹斯”，true为开启，false为关闭")
+    @ValueDescription("提醒地图：“诸王峡谷”“风暴点”“世界边缘”“奥林匹斯”“残月”，true为开启，false为关闭")
     var mapToRemind: Map<String,Boolean> by value(mapOf(Pair("King's Canyon",true),Pair("Storm Point",true),Pair("World's Edge",true),Pair("Olympus",true),Pair("Broken Moon",true)))
     @ValueDescription("字体")
     var font: String by value("微软雅黑")
