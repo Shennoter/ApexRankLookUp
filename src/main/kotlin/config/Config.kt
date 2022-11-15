@@ -1,4 +1,4 @@
-package pers.shennoter
+package config
 
 import net.mamoe.mirai.console.data.AutoSavePluginConfig
 import net.mamoe.mirai.console.data.ValueDescription
@@ -28,7 +28,7 @@ object Config : AutoSavePluginConfig("config") {
     @ValueDescription("地图轮换提醒：true为启用，false为关闭")
     var mapRotationReminder: Boolean by value(false)
     @ValueDescription("提醒地图：“诸王峡谷”“风暴点”“世界边缘”“奥林匹斯”，true为开启，false为关闭")
-    var mapToRemind: Map<String,Boolean> by value(mapOf(Pair("King's Canyon",true),Pair("Storm Point",true),Pair("World's Edge",true),Pair("Olympus",true)))
+    var mapToRemind: Map<String,Boolean> by value(mapOf(Pair("King's Canyon",true),Pair("Storm Point",true),Pair("World's Edge",true),Pair("Olympus",true),Pair("Broken Moon",true)))
     @ValueDescription("字体")
     var font: String by value("微软雅黑")
     @ValueDescription("是否使用代理：true为启用，false为关闭")
